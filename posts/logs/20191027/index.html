@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <link rel="canonical" href="https://changhoi.github.io/posts/logs/20191027/">
+    <meta charset="utf-8">
+
+<meta name="generator" content="Hexo 4.2.0">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<title>주니어 개발자의 스타트업 3개월 회고 - CH DEVLOG</title>
+
+
+    <meta name="description" content="스타트업 3개월사실 긴 기간은 아니라서 회고 할 만한 점이 있는가 싶긴 하다. 그래서 글은 짧아질 것 같긴 한데, 첫 개발직 회사나 다름 없었기 때문에, 짧은 기간에 필요한 내용들을 잘 배운 것 같기도 하다. 3개월만에 회사를 그만둔 이유는 아직 학업을 마치지 않았다는 점, 맡은 업무에 대한 흥미가 떨어진다는 점 등 여러 가지 이지만, 회사 업무가 재미 없">
+<meta property="og:type" content="article">
+<meta property="og:title" content="주니어 개발자의 스타트업 3개월 회고">
+<meta property="og:url" content="https://changhoi.github.io/posts/logs/20191027/">
+<meta property="og:site_name" content="CH DEVLOG">
+<meta property="og:description" content="스타트업 3개월사실 긴 기간은 아니라서 회고 할 만한 점이 있는가 싶긴 하다. 그래서 글은 짧아질 것 같긴 한데, 첫 개발직 회사나 다름 없었기 때문에, 짧은 기간에 필요한 내용들을 잘 배운 것 같기도 하다. 3개월만에 회사를 그만둔 이유는 아직 학업을 마치지 않았다는 점, 맡은 업무에 대한 흥미가 떨어진다는 점 등 여러 가지 이지만, 회사 업무가 재미 없">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://changhoi.github.io/images/og_image.png">
+<meta property="article:published_time" content="2019-10-26T15:00:00.000Z">
+<meta property="article:modified_time" content="2020-08-12T07:40:55.251Z">
+<meta property="article:author" content="changhoi">
+<meta property="article:tag" content="log">
+<meta property="article:tag" content="retrospec">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://changhoi.github.io/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.ico">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149480446-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-149480446-1');
+</script>
+
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+<link rel="alternate" href="/rss2.xml" title="CH DEVLOG" type="application/rss+xml">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/logo.jpg" alt="주니어 개발자의 스타트업 3개월 회고" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item" href="/">Home</a>
+                
+                <a class="navbar-item" href="/archives">Archives</a>
+                
+                <a class="navbar-item" href="/tags">Tags</a>
+                
+                <a class="navbar-item" href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="external nofollow noopener noreferrer" title="Github" href="https://github.com/changhoi">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                
+                <a class="navbar-item search" title="검색" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-10-26T15:00:00.000Z">2019-10-27</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/logs/">logs</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    12분 읽기 (대략 1800 단어)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                주니어 개발자의 스타트업 3개월 회고
+            
+        </h1>
+        <div class="content">
+            <h2 id="스타트업-3개월"><a href="#스타트업-3개월" class="headerlink" title="스타트업 3개월"></a>스타트업 3개월</h2><p>사실 긴 기간은 아니라서 회고 할 만한 점이 있는가 싶긴 하다. 그래서 글은 짧아질 것 같긴 한데, 첫 개발직 회사나 다름 없었기 때문에, 짧은 기간에 필요한 내용들을 잘 배운 것 같기도 하다. 3개월만에 회사를 그만둔 이유는 아직 학업을 마치지 않았다는 점, 맡은 업무에 대한 흥미가 떨어진다는 점 등 여러 가지 이지만, 회사 업무가 재미 없었기 때문인게 가장 크다고 볼 수 있고, 결과적으로 나는 이번 경험을 통해서 나에게 맞는 기업 가치관, 개발 하는 회사에 대한 요구 조건 등이 형성 된 것 같기도 하다. 이번 회고는 앞으로 나는 어떤 회사를 찾아 나가고 싶다는 점을 정리하고 싶다.</p>
+<a id="more"></a>
+
+<h2 id="커뮤니케이션과-코드-리뷰"><a href="#커뮤니케이션과-코드-리뷰" class="headerlink" title="커뮤니케이션과 코드 리뷰"></a>커뮤니케이션과 코드 리뷰</h2><p>이번에 있었던 회사는 커뮤니케이션을 하지 않았다. 아니, 하려고 노력 한 것 같은데 쉽게 바뀌지는 않았던 것 같다. 회사 분위기는 정말 차분하고 조용했다. 심지어 점심 시간 마저도 밥 먹으면서 서로 거의 한 마디도 하지 않았다. 입사 전에는, 개발과 관련된 얘기를 할 사람이 주변에 없어서 회사를 다니면, 이러한 사적인 대화는 제외 하더라도, 개발과 관련된 얘기를 하고 할 수 있는 환경이 있을 것이라는 기대가 있었는데 그런 점은 거의 없었고 앉아서 트렐로에 주어진 카드만 해결하는 노동을 했다 (정말 이 점은 별로였음). 졸업 이후 취업할 때는 꼭 여러 커뮤니케이션 채널이 있고, 개발자들 사이에 긍정적인 영향력을 주는 개발 문화가 정착된 회사를 꼭 가고 싶다. 예를 들어서 스터디가 활성화 되어 있다든지, 내부 세션을 자주 열고 있다든지 사내 토이프로젝트? 오픈소스 프로젝트 등이 별도로 존재한다든지 등…</p>
+<p>노력이라 함은 식사 중에 세 마디 이상 하기 (얼마나 말을 안 했으면…), 그리고 코드 리뷰 시도가 있었다. 코드 리뷰는 깃헙을 이용했는데, 코드 리뷰 경험 자체가 없었기 때문에 회사에서 사용한 방식이 베스트인가는 판단할 방법이 없지만 아래와 같은 점을 주로 봐주셨던 것 같다.</p>
+<ul>
+<li>중복된 코드가 이미 존재하는가?</li>
+<li>아키텍처에 맞는 위치에 코드가 존재하는가?</li>
+<li>해당 코드가 리소스 효율적으로 사용하는가? (이 부분은 사실… 거의 잘 안나왔다. 아마 회사에 시니어급의 개발자가 없었기 때문이 아닐까?)</li>
+</ul>
+<p>나는 아래와 같은 점이 더 있으면 좋겠다고 생각했다.</p>
+<ul>
+<li>읽기 좋은 코드인가?</li>
+<li>적절한 네이밍이었나?</li>
+<li>적절한 알고리즘이었나?</li>
+</ul>
+<h2 id="개발-스택과-포지션"><a href="#개발-스택과-포지션" class="headerlink" title="개발 스택과 포지션"></a>개발 스택과 포지션</h2><p>이번 회사에서는 풀스택 개발자로 입사했다. Node.js, MongoDB 백앤드와, React, JQuery를 사용했는데 JQuery를 사용한 부분은 레거시로 남아 있는 부분이고, React는 바꿔가고 있는 부분이었다. 입사 전에도 프론트보다 백앤드가 훨씬 재밌었지만, 프론트도 재미로 공부했었다. 그런데 회사를 다녀보니 확실하게 나는 프론트를 하고 싶지 않다(주로 맡고 싶지가 않다 정도? 사실 프로젝트 할 때는 괜찮다…). 앞으로 포지션을 선택할 때 프론트 부분은 신중하게 생각해볼 필요가 있을 것 같다.</p>
+<p>또 지금은 백앤드 개발을 하고 싶다 보다는, DevOps를 하고 싶다. 최근에 자동화에 큰 관심이 생겨서 개인, 동아리 프로젝트에 천천히 적용해 보고 있다. 막히는 부분들을 뚫기 어려워서 뭔가 레퍼런스가 있는 환경에서 배운다면 좋겠다고 생각하는데, DevOps를 적용한 회사에서 일 할 수 있다면 (이왕이면 DevOps를 할 수 있다면) 정말 좋을 것 같다.</p>
+<p>회사를 다니면서 가장 기대한 점은 테스트 코드를 쓰는 개발 방식이다. 그런데 이번 회사에서는 경험하지 못 했다.</p>
+<h2 id="회사의-개발-우선-순위"><a href="#회사의-개발-우선-순위" class="headerlink" title="회사의 개발 우선 순위"></a>회사의 개발 우선 순위</h2><p>이번 회사에서 느낀 가장 큰 점은 개발팀의 퍼포먼스, 개발 효율성을 위한 기술 도입을 비지니스에 의해 지나치게 막히지 않았으면 좋겠다는 것이다. 예를 들어서 Redux를 도입할 만한 상황인데 비지니스적인 요소로 개발 우선 순위가 무한으로 밀려나거나, 레거시를 대체하는데 큰 노력을 하지 않는다든지… 이러한 요소들은 개발 효율성, 퍼포먼스를 떨어뜨리고, 점점 악화시키는 요소라고 느껴졌다. 개발 문제를 해결하기 위한 기술 도입을 한 경험을 공유한 아티클을 읽으면서 정말 부러움을 많이 느꼈다. 말로만 도전을 두려워하지 않는 게 아니고 여러 시도를 장려하고 도전하는 회사를 선택해야겠다고 생각했다. 그런데 이러한 점을 어떻게 확인할 수 있을지는 모르겠다!</p>
+<h2 id="좋았던-점"><a href="#좋았던-점" class="headerlink" title="좋았던 점?"></a>좋았던 점?</h2><p>사람들은 좋은 사람들을 만났던 것 같다. 그리고 트렐로, 노션 등을 활용하는 방법, 깃헙으로 협업하는 방법 등을 조금 더 디테일하고 정형화 된 방식으로 배웠던 것 같다. 백앤드 API서버 아키텍처를 배웠다. 사실 그 전에는 MVC 패턴으로 작성했는데, 유사하지만(MVC 패턴으로 아예 설명하는 글도 보긴 했다.) 3 Layer로 나뉘는 아키텍처를 알게 되었고, 지금은 Monotholic한 앱을 만들 때는 같은 방식을 사용한다. (MSA를 시도하려고 노력하는데, 어떤 아키텍처가 좋을지가 항상 고민이다. Typescript를 시도하면서 types, interface를 또 어떻게 관리하는게 좋을지도…)</p>
+<h2 id="앞으로-나는-뭘-할-건가"><a href="#앞으로-나는-뭘-할-건가" class="headerlink" title="앞으로 나는 뭘 할 건가?"></a>앞으로 나는 뭘 할 건가?</h2><p>당연히 학교를 졸업해야겠지. 학교를 다니면서 공학에 집중해보고 싶기도 하고, MSA를 열심히 배워보고 싶기도 하고, DevOps를 열심히 공부해보고 싶기도 하다. 교환학생을 가보고 싶기도 하고, 졸업하기 전에 창업도 해보고 싶다. 어느 정도는 동시에 할 수 없지만, 대부분은 동시에 가능하다고 생각한다 (열심히 살면!). 열심히 사는 건 좋으니까 시도해볼만 하다.</p>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/log/" rel="tag">log</a>, <a class="has-link-grey -link" href="/tags/retrospec/" rel="tag">retrospec</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">관련 글</h3>
+        <div class="popular-posts">
+            <ul class="popular-posts"><li class="popular-posts-item"><div class="popular-posts-title"><h3><a href="/posts/logs/20191020/" title="전화 면접 후기" rel="bookmark">전화 면접 후기</a></h3></div></li><li class="popular-posts-item"><div class="popular-posts-title"><h3><a href="/posts/logs/20191125/" title="라이브 코딩 면접 후기" rel="bookmark">라이브 코딩 면접 후기</a></h3></div></li><li class="popular-posts-item"><div class="popular-posts-title"><h3><a href="/posts/logs/20191231/" title="2019년, 개발 1년차 회고" rel="bookmark">2019년, 개발 1년차 회고</a></h3></div></li><li class="popular-posts-item"><div class="popular-posts-title"><h3><a href="/posts/logs/20200307/" title="콜로나 맵(코로나 원격의료 정보앱) 만들기 기록" rel="bookmark">콜로나 맵(코로나 원격의료 정보앱) 만들기 기록</a></h3></div></li><li class="popular-posts-item"><div class="popular-posts-title"><h3><a href="/posts/logs/20200807/" title="초기 스타트업 회고" rel="bookmark">초기 스타트업 회고</a></h3></div></li></ul>
+        </div>
+    </div>    
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/posts/linux/detail-of-ls/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">리눅스 파일 정보 확인하기</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/posts/logs/20191020/">
+                <span class="level-item">전화 면접 후기</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">댓글</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '91ddc41ab35ce7e007bc',
+        clientSecret: '3c8e6dfed82df844abf72dcf101446a3990abe0e',
+        id: 'ef5c6ac7b541033af15851963bda65ca',
+        repo: 'https://github.com/changhoi/changhoi.github.io',
+        owner: 'changhoi',
+        admin: ["changhoi"],
+        createIssueManually: false,
+        distractionFreeMode: false
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
+
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level">
+            <div class="level-item has-text-centered" style="flex-shrink: 1">
+                <div>
+                    
+                    <figure class="image is-128x128 has-mb-6">
+                        <img class="is-rounded" src="https://avatars2.githubusercontent.com/u/34329147?s=400&amp;u=9d1b1dc88bc8ee5965f35b0160780264c3619eb6&amp;v=4" alt="Changhoi">
+                    </figure>
+                    
+                    <p class="is-size-4 is-block">
+                        Changhoi
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        changhoi
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>Seoul, Korea</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level is-mobile">
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        포스트
+                    </p>
+                    <a href="/archives">
+                        <p class="title has-text-weight-normal">
+                            40
+                        </p>
+                    </a>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        카테고리
+                    </p>
+                    <a href="/categories">
+                        <p class="title has-text-weight-normal">
+                            8
+                        </p>
+                    </a>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        태그
+                    </p>
+                    <a href="/tags">
+                        <p class="title has-text-weight-normal">
+                            46
+                        </p>
+                    </a>
+                </div>
+            </div>
+        </nav>
+        
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="https://github.com/changhoi" target="_blank" rel="external nofollow noopener noreferrer">
+                팔로우</a>
+        </div>
+        
+        
+        
+        <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="external nofollow noopener noreferrer" title="Github" href="https://github.com/changhoi">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="external nofollow noopener noreferrer" title="Facebook" href="https://www.facebook.com/profile.php?id=100014499787423">
+                
+                <i class="fab fa-facebook"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="external nofollow noopener noreferrer" title="Email" href="mailto:0417kch@naver.com">
+                
+                <i class="fas fa-envelope-square"></i>
+                
+            </a>
+            
+        </div>
+        
+    </div>
+</div>
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                카테고리
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/categories/backend/">
+            <span class="level-start">
+                <span class="level-item">backend</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">10</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/docker/">
+            <span class="level-start">
+                <span class="level-item">docker</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">5</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/etc/">
+            <span class="level-start">
+                <span class="level-item">etc</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">8</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/linux/">
+            <span class="level-start">
+                <span class="level-item">linux</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">3</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/logs/">
+            <span class="level-start">
+                <span class="level-item">logs</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">6</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/rxjs/">
+            <span class="level-start">
+                <span class="level-item">rxjs</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/serverless/">
+            <span class="level-start">
+                <span class="level-item">serverless</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">6</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/theory/">
+            <span class="level-start">
+                <span class="level-item">theory</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                태그
+            </h3>
+            <div class="field is-grouped is-grouped-multiline">
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/NestJS-GraphQL-%EB%B9%A0%EB%A5%B4%EA%B2%8C-%EB%B0%B0%EC%9A%B0%EA%B8%B0/">
+                        <span class="tag">NestJS_GraphQL_빠르게_배우기</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/NestJS-%EB%B9%A0%EB%A5%B4%EA%B2%8C-%EB%B0%B0%EC%9A%B0%EA%B8%B0/">
+                        <span class="tag">NestJS_빠르게_배우기</span>
+                        <span class="tag is-grey">5</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/RxJS-%EB%B9%A0%EB%A5%B4%EA%B2%8C-%EB%B0%B0%EC%9A%B0%EA%B8%B0/">
+                        <span class="tag">RxJS_빠르게_배우기</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/architecture/">
+                        <span class="tag">architecture</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/arcitecture/">
+                        <span class="tag">arcitecture</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/aws/">
+                        <span class="tag">aws</span>
+                        <span class="tag is-grey">5</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/best-practice/">
+                        <span class="tag">best_practice</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/deployment/">
+                        <span class="tag">deployment</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/docker/">
+                        <span class="tag">docker</span>
+                        <span class="tag is-grey">7</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/docker-container/">
+                        <span class="tag">docker_container</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/dockerfile/">
+                        <span class="tag">dockerfile</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/dynamodb/">
+                        <span class="tag">dynamodb</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/ecs/">
+                        <span class="tag">ecs</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/fargate/">
+                        <span class="tag">fargate</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/functional-programming/">
+                        <span class="tag">functional_programming</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/go/">
+                        <span class="tag">go</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/graphql/">
+                        <span class="tag">graphql</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/interview/">
+                        <span class="tag">interview</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/k8s/">
+                        <span class="tag">k8s</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/lambda/">
+                        <span class="tag">lambda</span>
+                        <span class="tag is-grey">5</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/linux/">
+                        <span class="tag">linux</span>
+                        <span class="tag is-grey">4</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/linux-cheatsheet/">
+                        <span class="tag">linux_cheatsheet</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/log/">
+                        <span class="tag">log</span>
+                        <span class="tag is-grey">6</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/nat/">
+                        <span class="tag">nat</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/nestjs/">
+                        <span class="tag">nestjs</span>
+                        <span class="tag is-grey">7</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/pattern/">
+                        <span class="tag">pattern</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/react/">
+                        <span class="tag">react</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/react-hooks/">
+                        <span class="tag">react-hooks</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/redux/">
+                        <span class="tag">redux</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/redux-saga/">
+                        <span class="tag">redux-saga</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/redux-thunk/">
+                        <span class="tag">redux-thunk</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/refactoring/">
+                        <span class="tag">refactoring</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/retrospec/">
+                        <span class="tag">retrospec</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/retrospect/">
+                        <span class="tag">retrospect</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/review/">
+                        <span class="tag">review</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/rxjs/">
+                        <span class="tag">rxjs</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/s3/">
+                        <span class="tag">s3</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/serverless/">
+                        <span class="tag">serverless</span>
+                        <span class="tag is-grey">7</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/serverless-%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC-%EB%B9%A0%EB%A5%B4%EA%B2%8C-%EB%B0%B0%EC%9A%B0%EA%B8%B0/">
+                        <span class="tag">serverless_프레임워크_빠르게_배우기</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/swagger/">
+                        <span class="tag">swagger</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/tutorial/">
+                        <span class="tag">tutorial</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/typescript/">
+                        <span class="tag">typescript</span>
+                        <span class="tag is-grey">9</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/ubuntu/">
+                        <span class="tag">ubuntu</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/webpack/">
+                        <span class="tag">webpack</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%EB%8F%84%EC%BB%A4%EB%A1%9C-%EA%B0%9C%EB%B0%9C-%ED%99%98%EA%B2%BD-%EA%B5%AC%EC%B6%95%ED%95%98%EA%B8%B0/">
+                        <span class="tag">도커로_개발_환경_구축하기</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%EC%84%9C%EB%B2%84%EC%82%AC%EC%9D%B4%EB%93%9C-%EA%B0%9C%EB%B0%9C%ED%99%98%EA%B2%BD%EA%B5%AC%EC%84%B1/">
+                        <span class="tag">서버사이드_개발환경구성</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+    
+    
+        <div class="column-right-shadow is-hidden-widescreen is-sticky">
+        
+            
+        
+            <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            최근 글
+        </h3>
+        
+        <article class="media">
+            
+            <a href="/posts/rxjs/rxjs-quicklearn-01/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://lh3.googleusercontent.com/proxy/UjtyGz20L98R1q0OpkNs3JFKcktKiD3dtR_aGk6qInS_tSBdezQ59V31wD1jw_nVKxjoVUanuPsVY4_oECpJQUYvJ-fY6MacE4Q48qRcpN2eTaJjT873zoLpeWNTM6GTI2iL0AAHI-WpVqBOtRNxmCqgYH8-GuwcWvnQa37qAq2V3m8ffzTC5WuaPXIbBhS3ThQ8XQ-vXYzk10k1O9-lYME0oEQquCThzG2t0KCITBbAub26vmtSgdh9OfU0bQe-winVp85SThbqaFUs_WZ9b7DVNbjLBww0F7zE" alt="RxJS 빠르게 배우기 01 - Overview">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-08-18T15:00:00.000Z">2020-08-19</time></div>
+                    <a href="/posts/rxjs/rxjs-quicklearn-01/" class="title has-link-black-ter is-size-6 has-text-weight-normal">RxJS 빠르게 배우기 01 - Overview</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/rxjs/">rxjs</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/posts/logs/20200807/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/logo.jpg" alt="초기 스타트업 회고">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-08-06T15:00:00.000Z">2020-08-07</time></div>
+                    <a href="/posts/logs/20200807/" class="title has-link-black-ter is-size-6 has-text-weight-normal">초기 스타트업 회고</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/logs/">logs</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/posts/backend/go-lambda-try/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://upload.wikimedia.org/wikipedia/commons/d/df/Go_gopher_app_engine_color.jpg" alt="Golang + Lambda로 신규 유저 정보 이메일로 보내기 삽질기">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-07-08T15:00:00.000Z">2020-07-09</time></div>
+                    <a href="/posts/backend/go-lambda-try/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Golang + Lambda로 신규 유저 정보 이메일로 보내기 삽질기</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/backend/">backend</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/posts/etc/refactoring-practice/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://c0.wallpaperflare.com/preview/600/243/618/javascript-vscode-editor-code.jpg" alt="리팩토링 실습하기">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-06-18T15:00:00.000Z">2020-06-19</time></div>
+                    <a href="/posts/etc/refactoring-practice/" class="title has-link-black-ter is-size-6 has-text-weight-normal">리팩토링 실습하기</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/etc/">etc</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/posts/etc/this-is-linux-book-review/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/2020-05-30-book-review/book.jpeg" alt="이것이 리눅스다 with RedHat CentOS 8 간단 리뷰">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-29T15:00:00.000Z">2020-05-30</time></div>
+                    <a href="/posts/etc/this-is-linux-book-review/" class="title has-link-black-ter is-size-6 has-text-weight-normal">이것이 리눅스다 with RedHat CentOS 8 간단 리뷰</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/etc/">etc</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+        
+        </div>
+    
+</div>
+
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only has-order-3 column-right is-sticky">
+    
+        
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            최근 글
+        </h3>
+        
+        <article class="media">
+            
+            <a href="/posts/rxjs/rxjs-quicklearn-01/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://lh3.googleusercontent.com/proxy/UjtyGz20L98R1q0OpkNs3JFKcktKiD3dtR_aGk6qInS_tSBdezQ59V31wD1jw_nVKxjoVUanuPsVY4_oECpJQUYvJ-fY6MacE4Q48qRcpN2eTaJjT873zoLpeWNTM6GTI2iL0AAHI-WpVqBOtRNxmCqgYH8-GuwcWvnQa37qAq2V3m8ffzTC5WuaPXIbBhS3ThQ8XQ-vXYzk10k1O9-lYME0oEQquCThzG2t0KCITBbAub26vmtSgdh9OfU0bQe-winVp85SThbqaFUs_WZ9b7DVNbjLBww0F7zE" alt="RxJS 빠르게 배우기 01 - Overview">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-08-18T15:00:00.000Z">2020-08-19</time></div>
+                    <a href="/posts/rxjs/rxjs-quicklearn-01/" class="title has-link-black-ter is-size-6 has-text-weight-normal">RxJS 빠르게 배우기 01 - Overview</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/rxjs/">rxjs</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/posts/logs/20200807/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/logo.jpg" alt="초기 스타트업 회고">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-08-06T15:00:00.000Z">2020-08-07</time></div>
+                    <a href="/posts/logs/20200807/" class="title has-link-black-ter is-size-6 has-text-weight-normal">초기 스타트업 회고</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/logs/">logs</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/posts/backend/go-lambda-try/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://upload.wikimedia.org/wikipedia/commons/d/df/Go_gopher_app_engine_color.jpg" alt="Golang + Lambda로 신규 유저 정보 이메일로 보내기 삽질기">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-07-08T15:00:00.000Z">2020-07-09</time></div>
+                    <a href="/posts/backend/go-lambda-try/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Golang + Lambda로 신규 유저 정보 이메일로 보내기 삽질기</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/backend/">backend</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/posts/etc/refactoring-practice/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://c0.wallpaperflare.com/preview/600/243/618/javascript-vscode-editor-code.jpg" alt="리팩토링 실습하기">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-06-18T15:00:00.000Z">2020-06-19</time></div>
+                    <a href="/posts/etc/refactoring-practice/" class="title has-link-black-ter is-size-6 has-text-weight-normal">리팩토링 실습하기</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/etc/">etc</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/posts/etc/this-is-linux-book-review/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/2020-05-30-book-review/book.jpeg" alt="이것이 리눅스다 with RedHat CentOS 8 간단 리뷰">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-29T15:00:00.000Z">2020-05-30</time></div>
+                    <a href="/posts/etc/this-is-linux-book-review/" class="title has-link-black-ter is-size-6 has-text-weight-normal">이것이 리눅스다 with RedHat CentOS 8 간단 리뷰</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/etc/">etc</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/logo.jpg" alt="주니어 개발자의 스타트업 3개월 회고" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 changhoi&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank" rel="external nofollow noopener noreferrer">Hexo</a> & <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="external nofollow noopener noreferrer">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="external nofollow noopener noreferrer" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="external nofollow noopener noreferrer" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="external nofollow noopener noreferrer" title="Github" href="https://github.com/changhoi">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("ko");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'https://changhoi.github.io',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" rel="external nofollow noopener noreferrer" target="_blank">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="Zurück nach oben" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="입력 하세요...">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '포스트',
+                PAGES: '페이지',
+                CATEGORIES: '카테고리',
+                TAGS: '태그',
+                UNTITLED: '(제목없음)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

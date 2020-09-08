@@ -1,0 +1,1348 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <link rel="canonical" href="https://changhoi.github.io/posts/backend/serverside-typescript-setting-02/">
+    <meta charset="utf-8">
+
+<meta name="generator" content="Hexo 4.2.0">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<title>Monolithic 서버사이드 타입스크립트 세팅 02 - CH DEVLOG</title>
+
+
+    <meta name="description" content="지난 글에서 두 가지를 완료 했었다. 물론 잘 작동하는지 확인하기는 어려웠다. tsconfig, webpack까지만 잘 설정하고 나면, 확인은 가능할 것 같다. 맨 처음 목차와는 조금 다르긴 한데, tsconfig와 webpack을 먼저 설정한 다음 스웨거를 설정하도록 하자.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Monolithic 서버사이드 타입스크립트 세팅 02">
+<meta property="og:url" content="https://changhoi.github.io/posts/backend/serverside-typescript-setting-02/">
+<meta property="og:site_name" content="CH DEVLOG">
+<meta property="og:description" content="지난 글에서 두 가지를 완료 했었다. 물론 잘 작동하는지 확인하기는 어려웠다. tsconfig, webpack까지만 잘 설정하고 나면, 확인은 가능할 것 같다. 맨 처음 목차와는 조금 다르긴 한데, tsconfig와 webpack을 먼저 설정한 다음 스웨거를 설정하도록 하자.">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://devblogs.microsoft.com/typescript/wp-content/uploads/sites/11/2018/08/typescriptfeature.png">
+<meta property="article:published_time" content="2020-03-11T15:00:00.000Z">
+<meta property="article:modified_time" content="2020-08-12T07:40:55.247Z">
+<meta property="article:author" content="changhoi">
+<meta property="article:tag" content="typescript">
+<meta property="article:tag" content="서버사이드_개발환경구성">
+<meta property="article:tag" content="webpack">
+<meta property="article:tag" content="swagger">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://devblogs.microsoft.com/typescript/wp-content/uploads/sites/11/2018/08/typescriptfeature.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.ico">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149480446-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-149480446-1');
+</script>
+
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+<link rel="alternate" href="/rss2.xml" title="CH DEVLOG" type="application/rss+xml">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/logo.jpg" alt="Monolithic 서버사이드 타입스크립트 세팅 02" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item" href="/">Home</a>
+                
+                <a class="navbar-item" href="/archives">Archives</a>
+                
+                <a class="navbar-item" href="/tags">Tags</a>
+                
+                <a class="navbar-item" href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="external nofollow noopener noreferrer" title="Github" href="https://github.com/changhoi">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="카탈로그" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="검색" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-image">
+        <span class="image is-7by1">
+            <img class="thumbnail" src="https://devblogs.microsoft.com/typescript/wp-content/uploads/sites/11/2018/08/typescriptfeature.png" alt="Monolithic 서버사이드 타입스크립트 세팅 02">
+        </span>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-03-11T15:00:00.000Z">2020-03-12</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/backend/">backend</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    28분 읽기 (대략 4160 단어)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                Monolithic 서버사이드 타입스크립트 세팅 02
+            
+        </h1>
+        <div class="content">
+            <p><a href="/posts/etc/serverside-typescript-setting-01/">지난 글</a>에서 두 가지를 완료 했었다. 물론 잘 작동하는지 확인하기는 어려웠다. <code>tsconfig</code>, <code>webpack</code>까지만 잘 설정하고 나면, 확인은 가능할 것 같다. 맨 처음 목차와는 조금 다르긴 한데, <code>tsconfig</code>와 <code>webpack</code>을 먼저 설정한 다음 스웨거를 설정하도록 하자.</p>
+<a id="more"></a>
+
+<ul>
+<li><del>Express 기본 아키텍처 구성</del></li>
+<li><del>ESLint &amp; Prettier</del></li>
+<li>tsconfig, webpack 설정</li>
+<li>Swagger</li>
+<li>개발 환경, 운영 환경 분리</li>
+<li>도커라이징</li>
+</ul>
+<h2 id="tsconfig"><a href="#tsconfig" class="headerlink" title="tsconfig"></a>tsconfig</h2><p><code>tsconfig</code>는 그냥 자바스크립트 이용자는 alias를 VSCode가 인식하게 한다는 면에서, <code>jsconfig</code>로 대체할 수 있다. 그 방법을 이 글에서 다루지는 않지만, 갓글에서 많은 분들이 제공해주고 있다. 일단 결론적으로 말하자면 현재 <code>tsconfig</code>의 설정은 아래와 같다.</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"compilerOptions"</span>: &#123;</span><br><span class="line">    <span class="comment">/* Basic Options */</span></span><br><span class="line">    <span class="attr">"target"</span>: <span class="string">"ES2018"</span> <span class="comment">/* Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018', 'ES2019', 'ES2020', or 'ESNEXT'. */</span>,</span><br><span class="line">    <span class="attr">"module"</span>: <span class="string">"commonjs"</span> <span class="comment">/* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', 'es2020', or 'ESNext'. */</span>,</span><br><span class="line">    <span class="attr">"allowJs"</span>: <span class="literal">false</span> <span class="comment">/* Allow javascript files to be compiled. */</span>,</span><br><span class="line">    <span class="attr">"sourceMap"</span>: <span class="literal">true</span> <span class="comment">/* Generates corresponding '.map' file. */</span>,</span><br><span class="line">    <span class="attr">"outDir"</span>: <span class="string">"./dist/"</span> <span class="comment">/* Redirect output structure to the directory. */</span>,</span><br><span class="line">    <span class="attr">"downlevelIteration"</span>: <span class="literal">true</span> <span class="comment">/* Provide full support for iterables in 'for-of', spread, and destructuring when targeting 'ES5' or 'ES3'. */</span>,</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Strict Type-Checking Options */</span></span><br><span class="line">    <span class="attr">"strict"</span>: <span class="literal">true</span> <span class="comment">/* Enable all strict type-checking options. */</span>,</span><br><span class="line">    <span class="attr">"strictPropertyInitialization"</span>: <span class="literal">false</span> <span class="comment">/* Enable strict checking of property initialization in classes. */</span>,</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Additional Checks */</span></span><br><span class="line">    <span class="attr">"noUnusedLocals"</span>: <span class="literal">true</span> <span class="comment">/* Report errors on unused locals. */</span>,</span><br><span class="line">    <span class="attr">"baseUrl"</span>: <span class="string">"./"</span> <span class="comment">/* Base directory to resolve non-absolute module names. */</span>,</span><br><span class="line">    <span class="attr">"paths"</span>: &#123;</span><br><span class="line">      <span class="attr">"@/*"</span>: [<span class="string">"src/*"</span>]</span><br><span class="line">    &#125; <span class="comment">/* A series of entries which re-map imports to lookup locations relative to the 'baseUrl'. */</span>,</span><br><span class="line">    <span class="attr">"typeRoots"</span>: [</span><br><span class="line">      <span class="string">"node_modules/@types"</span>,</span><br><span class="line">      <span class="string">"src/@types"</span></span><br><span class="line">    ] <span class="comment">/* List of folders to include type definitions from. */</span>,</span><br><span class="line">    <span class="attr">"esModuleInterop"</span>: <span class="literal">true</span> <span class="comment">/* Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects for all imports. Implies 'allowSyntheticDefaultImports'. */</span>,</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Source Map Options */</span></span><br><span class="line">    <span class="attr">"sourceRoot"</span>: <span class="string">"./src"</span> <span class="comment">/* Specify the location where debugger should locate TypeScript files instead of source locations. */</span>,</span><br><span class="line">    <span class="attr">"mapRoot"</span>: <span class="string">"./src"</span> <span class="comment">/* Specify the location where debugger should locate map files instead of generated locations. */</span>,</span><br><span class="line">    <span class="attr">"experimentalDecorators"</span>: <span class="literal">true</span> <span class="comment">/* Enables experimental support for ES7 decorators. */</span>,</span><br><span class="line">    <span class="attr">"emitDecoratorMetadata"</span>: <span class="literal">true</span> <span class="comment">/* Enables experimental support for emitting type metadata for decorators. */</span>,</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Advanced Options */</span></span><br><span class="line">    <span class="attr">"forceConsistentCasingInFileNames"</span>: <span class="literal">true</span> <span class="comment">/* Disallow inconsistently-cased references to the same file. */</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"include"</span>: [<span class="string">"src/**/*.ts"</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>위는 사용 중인 옵션을 제외하고는 모두 삭제한 것이다. 글을 쓰면서 평소에 아리송 했던 것들도 정리해봤다. 딱 보면 감이 오는 몇 가지를 제외하고, 먼저 <code>baseUrl</code>과 <code>paths</code>는 VSCode상에서 부분에서 alias를 설정해주는 것에 의미가 있다. 실제로 컴파일할 때 이 부분을 고려해서 컴파일 해주지는 않는다. (?.. 왜지, 진짜 버그같음) <code>jsconfig</code>에서도 해당 설정이 존재한다. 마찬가지로 VSCode에서 인식할 수 있게 바꿔주는 역할 정도만 해준다. <code>ts-node</code>를 사용해서 실행할 때 조차도 인식을 못 해주는데, <code>tsconfig-paths</code> 모듈을 설치하고 <code>-r tsconfig-paths/register</code> 옵션을 넣어줘야 한다. 자세한 내용은 개발 환경 설정 하면서 작성하려고 한다.</p>
+<p><code>emitDecoratorMetadata</code>와 <code>experimentalDecorators</code>는 데코레이터 사용을 가능하게 해주는 것과 관련된 설정인데, <code>typedi</code>와 <code>typeorm</code> 사용시 필요하다. 메타데이터와 관련된 내용은 확인해보지 못 했다. <code>strictPropertyInitialization</code> 이 부분도 <code>typeorm</code> 테이블 모델링을 할 때 문제가 있어서 추가한 부분이다. 클래스 내부의 프로퍼티가 컨스트럭터에서 초기화 되지 않을 때 에러를 뿜는 것인데 이 부분을 꺼줬다.</p>
+<p><code>esModuleInterop</code> 옵션은 <code>commonjs</code>로 작성된 모듈을 가져올 때, 원래는 <code>import * as Module from &quot;module&quot;</code>과 같은 형식으로 가져와야 하는데, <code>import Module from &quot;module&quot;</code>로 가져올 수 있도록, 컴파일 할 때 특수한 중간자를 둔다. namespace object를 만들어주는 함수를 사용하는 것 같다. 자세한 내용은 <a href="https://stackoverflow.com/questions/56238356/understanding-esmoduleinterop-in-tsconfig-file" rel="external nofollow noopener noreferrer" target="_blank">스택오버플로우</a>에 있다.</p>
+<p>모든 내용은 당연히 알지 못하고, (그거 하나하나 공부하면 시작을 못 한다고 생각하기 때문에…) 필요할 때마다 어떤 옵션을 써야 하는지 찾아보는 편인데, 타입스크립트는 <code>tsc --init</code> 명령어를 사용하면 모든 옵션이 있고, 설명도 주석으로 적당히 친절하게 달아둔 편이다. 지우지말고, 필요할 때 찾아가면서 옵션을 설정해주는 편이 좋다.</p>
+<h2 id="Webpack"><a href="#Webpack" class="headerlink" title="Webpack"></a>Webpack</h2><p>우선, <code>tsconfig</code>를 통해 VSCode 상에서 alias로 코드를 가져온 것을 인식하게 만들었다. 그렇지만 <code>tsc</code> 명령어로 트랜스파일링을 시도한다고 해도, 이 부분이 실제로 반영되지 않는다. 그래서 <code>webpack</code>을 사용해서 해당 alias에 맞게 트랜스파일을 할 수 있게 만든다. 또, 번들링을 함으로써 코드를 최적화 하고 도커 이미지 크기를 줄이는 것에도 목적이 있다.</p>
+<p>우선 웹팩으로 빌드하는 환경을 만들기 위해서 아래 의존 패키지를 설치한다.</p>
+<figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add webpack webpack-cli webpack-node-externals rimraf @babel/&#123;core,preset-env,preset-typescript,plugin-proposal-decorators,plugin-proposal-class-properties&#125; babel-loader -D</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>webpack</code>, <code>webpack-cli</code>: 웹팩 설정 파일을 읽고 파일들을 번들링 해주는 핵심 역할을 한다.</li>
+<li><code>webpack-node-externals</code>: 필자는 <code>node_modules</code> 내용을 함께 번들링 하고 싶어하는 편이다. 여러번 시도를 해봤지만, 성공할 수가 없었다. 특히 <code>serverless-webpack</code>에서 이 부분을 함께 번들링 하지 않는 것을 보고, 그냥 포기 했다. <code>node_modules</code>를 번들링 대상에서 제외해주는 역할을 하는 패키지이다.</li>
+<li><code>rimraf</code>: OS에 관계없이 삭제하는 명령어를 수행할 수 있다. 빌드된 디렉토리를 삭제해준다.</li>
+<li><code>@babel/{core,preset-env,preset-typescript}</code>: 필자는 <code>ts-loader</code>를 사용하지 않고, 바벨을 통해 해결하는 편이다. 설정이 깔끔해지고, 더 빠르다고 한다. 그 이유와 자세한 내용은 대단하기로 소문난 <a href="https://ui.toast.com/weekly-pick/ko_20181220/" rel="external nofollow noopener noreferrer" target="_blank">Toast팀의 블로그</a>를 확인해보자.</li>
+<li><code>@babel/plugin-proposal-decorators</code>: 바벨에서 데코레이터를 트랜스파일링 할 수 있게 해준다.</li>
+<li><code>@babel/plugin-proposal-class-properties</code>: 바벨에서 클래스의 프로퍼티(메서드 말고)를 트랜스파일링 할 수 있게 해준다. 위 두 플러그인은 설정값과 순서도 지켜줘야 한다.</li>
+<li><code>babel-loader</code>: <code>webpack</code> 모듈의 <code>rules</code>에서 로더로 작동하게 될 <code>babel-loader</code>이다.</li>
+</ul>
+<blockquote>
+<p>플러그인들은 코드를 쓰다 보면 추가될 수 있다. 빌드 에러가 나면 해당 부분을 찾아서 필요한 플러그인을 추가해주면 된다.</p>
+</blockquote>
+<p>설치 후 프로젝트 최상단에 <code>webpack.config.js</code> 파일을 만들어주면 된다. 내용은 결과적으로 아래와 같다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">"path"</span>);</span><br><span class="line"><span class="keyword">const</span> nodeExternals = <span class="built_in">require</span>(<span class="string">"webpack-node-externals"</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">env</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    <span class="comment">// ReferenceError: regeneratorRuntime is not defined =&gt; polyfill</span></span><br><span class="line">    entry: &#123; <span class="attr">app</span>: [<span class="string">"@babel/polyfill"</span>, <span class="string">"./src/index.ts"</span>] &#125;,</span><br><span class="line">    devtool: <span class="string">"source-map"</span>,</span><br><span class="line">    output: &#123;</span><br><span class="line">      filename: <span class="string">"[name].js"</span>,</span><br><span class="line">      path: path.resolve(__dirname, <span class="string">"dist"</span>)</span><br><span class="line">    &#125;,</span><br><span class="line">    mode: env.NODE_ENV,</span><br><span class="line">    target: <span class="string">"node"</span>,</span><br><span class="line">    node: &#123;</span><br><span class="line">      __dirname: <span class="literal">false</span>,</span><br><span class="line">      __filename: <span class="literal">false</span></span><br><span class="line">    &#125;,</span><br><span class="line">    externals: [nodeExternals()],</span><br><span class="line">    <span class="built_in">module</span>: &#123;</span><br><span class="line">      rules: [</span><br><span class="line">        &#123;</span><br><span class="line">          test: <span class="regexp">/\.(ts|js)?$/</span>,</span><br><span class="line">          use: &#123;</span><br><span class="line">            loader: <span class="string">"babel-loader"</span>,</span><br><span class="line">            options: &#123;</span><br><span class="line">              presets: [<span class="string">"@babel/preset-env"</span>, <span class="string">"@babel/preset-typescript"</span>],</span><br><span class="line">              plugins: [</span><br><span class="line">                [<span class="string">"@babel/plugin-proposal-decorators"</span>, &#123; <span class="attr">legacy</span>: <span class="literal">true</span> &#125;],</span><br><span class="line">                [<span class="string">"@babel/plugin-proposal-class-properties"</span>, &#123; <span class="attr">loose</span>: <span class="literal">true</span> &#125;]</span><br><span class="line">              ]</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;,</span><br><span class="line">    resolve: &#123;</span><br><span class="line">      extensions: [<span class="string">".ts"</span>, <span class="string">".js"</span>, <span class="string">".json"</span>],</span><br><span class="line">      alias: &#123;</span><br><span class="line">        <span class="string">"@"</span>: path.join(__dirname, <span class="string">"src"</span>)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><code>nodeExternals()</code> 덕분에 과거에 <code>node</code> 옵션으로 추가 했던 많은 부분을 사용 안해도 되는 것 같다 (확실하지는 않다. 간단하게 실험해봤을 때 <code>unresolve</code>되는 경우는 없었다.). 다만, <code>__dirname</code>과 <code>filename</code>은 그냥 사용하면 <code>/</code>, <code>index.js</code>가 나온다. 제대로 반영하게 하기 위해서 <code>node</code> 옵션에 <code>__dirname</code>, <code>__filename</code>을 <code>false</code> 값으로 둔다. (아마 이것도 추측이지만, webpack은 기본적으로 웹 환경에서 돌아가는 걸 상정해서 <code>__dirname</code>, <code>__filename</code>을 덮어 씌우는 것 같다. 그 기능을 꺼주는 걸로 알고 있다.)</p>
+<p><code>@babel/polyfill</code>은 <code>async await</code> 문법을 컴파일 할 때 문제가 생기지 않게 해준다. 그냥 사용하게 되면 <code>regeneratorRuntime is not defined</code>라는 에러가 발생한다.</p>
+<p><code>module</code> 부분에 타입스크립트를 어떻게 컴파일할 것인지 나와있다. <code>ts-loader</code> 역할을 대신하게 된다.</p>
+<p><code>resolve</code> 부분에서 <code>@/*</code>를 <code>src/*</code>로 바꿔준다. 이제 컴파일을 하게 되면 온전하게 파일 경로를 설정해준다.</p>
+<p>컴파일을 위한 <code>webpack</code> 설정은 얼추 마무리 됐지만, Swagger를 설정하면서, 데이터베이스를 붙이면서, 도커라이징을 하면서 조금씩 추가되거나 수정되는 부분이 생기게 된다. 기타 자세한 옵션은 <a href="https://webpack.js.org/guides/" rel="external nofollow noopener noreferrer" target="_blank">webpack 공식 문서</a>나 간단하게는 이 <a href="https://trustyoo86.github.io/webpack/2018/01/10/webpack-configuration.html" rel="external nofollow noopener noreferrer" target="_blank">링크</a>를 확인해봐도 좋을 것 같다.</p>
+<p>마지막으로 웹팩 빌드를 위한 스크립트를 붙여주자.</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// package.json</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="comment">//...</span></span><br><span class="line">  <span class="attr">"scripts"</span>: &#123;</span><br><span class="line">    <span class="attr">"build:dev"</span>: <span class="string">"rimraf ./dist &amp;&amp; webpack --env.NODE_ENV=development"</span>,</span><br><span class="line">    <span class="attr">"build:prod"</span>: <span class="string">"rimraf ./dist &amp;&amp; webpack --env.NODE_ENV=production"</span>,</span><br><span class="line">    <span class="attr">"start"</span>: <span class="string">"node ./dist/app.js"</span>,</span><br><span class="line">    <span class="attr">"lint"</span>: <span class="string">"eslint \"./src/**/*.ts\""</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">//...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Swagger"><a href="#Swagger" class="headerlink" title="Swagger"></a>Swagger</h2><p>스웨거는 API 문서 만들어주는 툴이다. 사용 방법에 대해서 자세히 다루지는 못할 것 같고, 붙이는 것만 확인해보자. 우선 목표는, 주석으로 문서화를 할 수 있게 되어야 하고, 개발 서버에 배포될 때, 웹팩이 해당 주석을 지우지 않아야 한다.</p>
+<p>우선 express에서 개발 서버와 함께 띄우기 위해 <code>swagger-ui-express</code>와 <code>swagger-jsdoc</code>을 사용한다.</p>
+<figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add swagger-ui-express swagger-jsdoc</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>swagger-ui-express</code>: Express 서버에 Swagger 서버가 뜰 수 있게 미들웨어를 제공해준다.</li>
+<li><code>swagger-jsdoc</code>: <a href="https://jsdoc.app/" rel="external nofollow noopener noreferrer" target="_blank">JSDoc</a> 코멘트 형식으로 API Doc을 구성하게 되면 인식하고 <code>swagger.json</code>을 만들어준다. 이 내용을 <code>swagger-ui-express</code>에 넣어주면 된다.</li>
+</ul>
+<p>문제는 코멘트 형식이라 빌드할 때 웹팩을 사용하면 지워진다. 두 가지 방식으로 해당 문제를 해결할 수 있다(<del>있을 것으로 추정된다.</del>). 한 가지 방법은 <code>NODE_ENV</code>에 따라서 <code>@swagger</code>가 붙은 코멘트를 지우지 않는 옵션을 넣어주는 것이고, 두 번째는 <a href="https://github.com/patsimm/swagger-jsdoc-webpack-plugin" rel="external nofollow noopener noreferrer" target="_blank">스타 2개 붙은 webpack 플러그인</a>을 사용하는 것인데, 필자는 그래도 이 템플릿을 프로덕트에도 사용할 예정이라 그냥 첫 번째 방법으로 하기로 했다.</p>
+<p>우선 <code>swagger</code> 디렉토리를 <code>src</code> 아래 만들었다. 안에는 <code>index.ts</code>를 만든다</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/swagger/index.ts</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> path <span class="keyword">from</span> <span class="string">"path"</span>;</span><br><span class="line"><span class="keyword">import</span> swaggerJSDoc <span class="keyword">from</span> <span class="string">"swagger-jsdoc"</span>;</span><br><span class="line"><span class="keyword">import</span> configs <span class="keyword">from</span> <span class="string">"@/configs"</span>;</span><br><span class="line"><span class="keyword">import</span> components <span class="keyword">from</span> <span class="string">"./components"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> options = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> isLocal = configs.ENV === <span class="string">"local"</span>;</span><br><span class="line">  <span class="keyword">const</span> apiPath = isLocal</span><br><span class="line">    ? path.join(__dirname, <span class="string">".."</span>, <span class="string">"routers"</span>, <span class="string">"v1"</span>, <span class="string">"*.*"</span>)</span><br><span class="line">    : path.join(__dirname, <span class="string">"app.js"</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    swaggerDefinition: &#123;</span><br><span class="line">      info: &#123;</span><br><span class="line">        title: <span class="string">"프로젝트 타이틀"</span>,</span><br><span class="line">        version: <span class="string">"프로젝트 버전"</span></span><br><span class="line">      &#125;,</span><br><span class="line">      host: configs.APP.HOST, <span class="comment">// localhost 등</span></span><br><span class="line">      basePath: <span class="string">"/api"</span>,</span><br><span class="line">      schemas: [<span class="string">"http"</span>, <span class="string">"https"</span>],</span><br><span class="line">      components</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    apis: [apiPath]</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Initialize swagger-jsdoc -&gt; returns validated swagger spec in json format</span></span><br><span class="line"><span class="keyword">const</span> swaggerSpec = swaggerJSDoc(options());</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> swaggerSpec;</span><br></pre></td></tr></table></figure>
+
+<p>빌드를 하면, 하나의 파일인 <code>app.js</code>에 모든 주석이 들어가게 되기 때문에 <code>ts-node</code>를 사용해 동작시키는 로컬 환경이 아니라면, <code>app.js</code>에서 주석을 찾아야 한다. 반면 타입스크립트 파일을 그대로 돌리는 <code>ts-node</code>를 사용하면, <code>router</code> 아래 라우터들마다 존재하게 된다. 따라서 <code>apiPath</code>는 컴파일 여부에 따라서 바뀐다. 이제, 일반적으로 사용되는 부분들을 컴포넌트로 만들기 위해서 <code>swagger</code> 폴더에 <code>components.ts</code>롤 만든다.</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; MESSAGE &#125; <span class="keyword">from</span> <span class="string">"@/errors/errRequest"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> components = &#123;</span><br><span class="line">  response: &#123;</span><br><span class="line">    BadRequest: &#123;</span><br><span class="line">      description: MESSAGE.BAD_REQUEST,</span><br><span class="line">      schema: &#123;</span><br><span class="line">        $ref: <span class="string">"#/components/errorResult/Error"</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    NotFound: &#123;</span><br><span class="line">      description: MESSAGE.NOT_FOUND,</span><br><span class="line">      schema: &#123;</span><br><span class="line">        $ref: <span class="string">"#/components/errorResult/Error"</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  errorResult: &#123;</span><br><span class="line">    <span class="built_in">Error</span>: &#123;</span><br><span class="line">      <span class="keyword">type</span>: <span class="string">"object"</span>,</span><br><span class="line">      properties: &#123;</span><br><span class="line">        message: &#123;</span><br><span class="line">          <span class="keyword">type</span>: <span class="string">"string"</span>,</span><br><span class="line">          description: <span class="string">"error message"</span></span><br><span class="line">        &#125;,</span><br><span class="line">        error: &#123;</span><br><span class="line">          <span class="keyword">type</span>: <span class="string">"string"</span>,</span><br><span class="line">          description: <span class="string">"error stack"</span></span><br><span class="line">        &#125;,</span><br><span class="line">        statusCode: &#123;</span><br><span class="line">          <span class="keyword">type</span>: <span class="string">"number"</span>,</span><br><span class="line">          description: <span class="string">"error code"</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> components;</span><br></pre></td></tr></table></figure>
+
+<p>에러 메시지를 실제로 만들어내는 Default한 메시지 값과 동일하게 하기 위해서 <code>src/errors/errRequest</code> 아래 메시지를 컨스트로 관리한다. 그리고 <code>errorResult</code>의 형태는 express에서 마지막에 에러를 모아서 보내주는 부분과 동일하게 맞춰준다. 에러 컴포넌트 말고도, 일반적으로 사용되는 Response를 위와 같이 만들어두고 사용하면 편하다.</p>
+<p>아래는 <code>errors</code>에서 constants를 관리하는 코드이다.</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/errors/errReqeust.ts</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; BAD_REQUEST, NOT_FOUND &#125; <span class="keyword">from</span> <span class="string">"http-status-codes"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> MESSAGE = &#123;</span><br><span class="line">  BAD_REQUEST: <span class="string">"유효하지 않은 요청입니다."</span> <span class="keyword">as</span> <span class="keyword">const</span>,</span><br><span class="line">  NOT_FOUND: <span class="string">"리소스가 존재하지 않습니다."</span> <span class="keyword">as</span> <span class="keyword">const</span></span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> BadRequest <span class="keyword">extends</span> RequestError &#123;</span><br><span class="line">  <span class="keyword">constructor</span>(<span class="params">message: <span class="built_in">string</span> = MESSAGE.BAD_REQUEST</span>) &#123;</span><br><span class="line">    <span class="keyword">super</span>(message);</span><br><span class="line">    <span class="keyword">this</span>.statusCode = BAD_REQUEST;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ...</span></span><br></pre></td></tr></table></figure>
+
+<p>이제 <code>appLoader</code>에 <code>/api-docs</code>로 이어지는 부분을 추가해주자.</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/app.ts</span></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> appLoader = <span class="keyword">async</span> (app: Express) =&gt; &#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (configs.NODE_ENV === <span class="string">"development"</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; <span class="keyword">default</span>: swaggerUi &#125; = <span class="keyword">await</span> <span class="keyword">import</span>(<span class="string">"swagger-ui-express"</span>);</span><br><span class="line">    <span class="keyword">const</span> &#123; <span class="keyword">default</span>: swaggerSpec &#125; = <span class="keyword">await</span> <span class="keyword">import</span>(<span class="string">"@/swagger"</span>);</span><br><span class="line"></span><br><span class="line">    app.use(<span class="string">"/api-docs"</span>, swaggerUi.serve, swaggerUi.setup(swaggerSpec));</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  app.use(<span class="string">"/api"</span>, routers);</span><br><span class="line"></span><br><span class="line">  app.use(<span class="function">(<span class="params">err: <span class="built_in">any</span>, req: Request, res: Response, next: NextFunction</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(err);</span><br><span class="line">    res.status(err.statusCode || <span class="number">500</span>).json(&#123;</span><br><span class="line">      message: err.message,</span><br><span class="line">      statusCode: err.statusCode,</span><br><span class="line">      error: configs.ENV === <span class="string">"prod"</span> ? <span class="literal">null</span> : err</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> appLoader;</span><br></pre></td></tr></table></figure>
+
+<p><code>src/loaders/index.ts</code>에서 <code>appLoader</code>도 <code>await</code>을 붙여줘야 한다.</p>
+<p>이제 그럼 <code>webpack</code>에서 <code>prod</code> 모드로 빌드 하면 <code>/api-docs</code>에는 아무 것도 없어야 하고, <code>dev</code> 모드로 빌드하면 어떤 UI가 나와야 한다. 테스트를 위해서 <code>console.log</code>를 붙이고 확인해봤다.</p>
+<p><img src="/images/2020-03-12-serverside-typescript-setting-02/01.png" alt><br><small>production 모드</small></p>
+<p><img src="/images/2020-03-12-serverside-typescript-setting-02/02.png" alt><br><small>develoment 모드</small></p>
+<p><img src="/images/2020-03-12-serverside-typescript-setting-02/03.png" alt><br><small>Swagger의 UI</small></p>
+<p>이제 스웨거가 붙긴 했다. 그렇지만 여전히 주석 형태로 API Doc을 달았을 때 웹팩이 지워버리는 문제가 있다. 이 부분은 웹팩의 <code>optimization</code> 옵션과 관련이 있다. <code>minimizer</code>를 <code>terser-webpack-plugin</code>을 이용해서, NODE_ENV에 따라서, 다르게 번들링 하도록 설정했다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">"path"</span>);</span><br><span class="line"><span class="keyword">const</span> TerserPlugin = <span class="built_in">require</span>(<span class="string">"terser-webpack-plugin"</span>);</span><br><span class="line"><span class="keyword">const</span> nodeExternals = <span class="built_in">require</span>(<span class="string">"webpack-node-externals"</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">env</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> isDev = env.NODE_ENV === <span class="string">"development"</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> terserPlugin = isDev</span><br><span class="line">    ? <span class="keyword">new</span> TerserPlugin(&#123;</span><br><span class="line">        terserOptions: &#123;</span><br><span class="line">          output: &#123;</span><br><span class="line">            comments: <span class="regexp">/@swagger/i</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;)</span><br><span class="line">    : <span class="keyword">new</span> TerserPlugin();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    output: &#123;</span><br><span class="line">      filename: <span class="string">"[name].js"</span>,</span><br><span class="line">      path: path.resolve(__dirname, <span class="string">"dist"</span>)</span><br><span class="line">    &#125;,</span><br><span class="line">    optimization: &#123;</span><br><span class="line">      minimize: <span class="literal">true</span>,</span><br><span class="line">      minimizer: [terserPlugin]</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>테스트를 위해 <code>health</code>를 체크해주는 앤드포인트에 해당 주석을 달았다. 그리고, 실행 환경인 <code>ENV</code>는 원래는 <code>local</code>인데, 개발 서버에 올라갔을 경우의 문제를 해결하는 중이니까 <code>ENV</code>도 <code>dev</code>로 바꿔준다.</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @swagger</span></span><br><span class="line"><span class="comment"> * /health:</span></span><br><span class="line"><span class="comment"> *  get:</span></span><br><span class="line"><span class="comment"> *    summary: 서버 헬스 체크</span></span><br><span class="line"><span class="comment"> *    responses:</span></span><br><span class="line"><span class="comment"> *      200:</span></span><br><span class="line"><span class="comment"> *        description: 서버 헬스 체크용도, Swagger 체크 용도</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line">router.get(<span class="string">"/health"</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">  res.status(OK).json(&#123; server: <span class="string">"on"</span> &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>이제 다시 빌드를 해보고나서 같은 앤드포인트에 가보면 우리가 만든 스웨거가 등장한다.</p>
+<p><img src="/images/2020-03-12-serverside-typescript-setting-02/04.png" alt></p>
+<p>로컬 환경에서는 어짜피 웹팩이 동작하지 않아서 무조건 살아있게 된다. 따라서 테스트 해볼 필요는 없겠지만, 다음 글에서 로컬 개발환경을 설정하고 나면 확인할 수 있다.</p>
+<blockquote>
+<p>환경변수에 대해서 헷갈릴 수 있을 것이라 생각이 되어 주석을 달자면, <code>NODE_ENV</code>는 Node에서 정해진 환경변수이다. <code>NODE_ENV</code>는 <code>development</code>, <code>production</code> 두 가지 중에 하나이다. <code>ENV</code>는 필자가 정한 환경 변수이다. <code>.env</code>에 따라서 수정할 수 있다. <code>NODE_ENV</code>에 대해서 검색해보면 더 많은 정보를 확인해볼 수 있다.</p>
+</blockquote>
+<hr>
+<p>이번 글은 이 정도로 마무리 지으려고 한다. 자세한 Swagger 사용법에 대해서는 다루지 않는다. (필자도 잘 모름… 쓰던 것만 쓰는 편임) 그래도 찾아보면 잘 나오니까 우리는 찾아가면서 쓰도록 하자.</p>
+<p>다음 글에서 도커라이징한 다음, 환경 별로 <code>.env</code>를 설정해두는 방법, 로컬에서 돌리는 방법 등을 설정해두자.</p>
+<blockquote>
+<p>테스트를 해보면서 이 글에 나오지 않은 부분들이 레포지토리에 추가 되긴 했다. 중요한 부분은 아니라서 글에 작성하지 않았다.</p>
+</blockquote>
+<p>지금까지 구성된 내용은 이 <a href="https://github.com/changhoi/ts-backend-template/tree/8053fcd78d4e752764de39aa5bf0ba6217dc2afc" rel="external nofollow noopener noreferrer" target="_blank">링크</a>에서 확인할 수 있다.</p>
+<h2 id="후기"><a href="#후기" class="headerlink" title="후기"></a>후기</h2><p>개발 서버에서 SwaggerUI를 보내는 방식이 깔끔한 방식인지 모르겠다. 일단 이상한 버그가 있는데, 필자는 함수 안에 주석을 넣고 싶다. 에디터에서 함수를 fold 했을 때, 함께 접히면 좋을 것 같아서. 그런데 어떤 이상한 확률로 그런 식으로 작성된 주석을 웹팩이 지워버렸다. 이유를 모르겠다. 그래서 밖에다 빼고 사용한지 좀 됐는데 그 이후로는 그런 문제가 생기지는 않았다.</p>
+<p>1, 2, 3편으로 이어지는 이 글이 사실은 한 번에 설정하는 내용인데 끊어 정리 하느라, 매끄럽지 않은 느낌도 있다. 최대한 독립적인 부분을 독립적으로 수행하게 구성하려 했는데 그런 면에서는 성공적이지 못 했다.</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="https://stackoverflow.com/questions/56238356/understanding-esmoduleinterop-in-tsconfig-file" rel="external nofollow noopener noreferrer" target="_blank">https://stackoverflow.com/questions/56238356/understanding-esmoduleinterop-in-tsconfig-file</a></li>
+<li><a href="https://trustyoo86.github.io/webpack/2018/01/10/webpack-configuration.html" rel="external nofollow noopener noreferrer" target="_blank">https://trustyoo86.github.io/webpack/2018/01/10/webpack-configuration.html</a></li>
+<li><a href="https://webpack.js.org/guides/" rel="external nofollow noopener noreferrer" target="_blank">https://webpack.js.org/guides/</a></li>
+<li><a href="https://www.npmjs.com/package/swagger-ui-express" rel="external nofollow noopener noreferrer" target="_blank">https://www.npmjs.com/package/swagger-ui-express</a></li>
+<li><a href="https://github.com/webpack-contrib/terser-webpack-plugin" rel="external nofollow noopener noreferrer" target="_blank">https://github.com/webpack-contrib/terser-webpack-plugin</a></li>
+</ul>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/swagger/" rel="tag">swagger</a>, <a class="has-link-grey -link" href="/tags/typescript/" rel="tag">typescript</a>, <a class="has-link-grey -link" href="/tags/webpack/" rel="tag">webpack</a>, <a class="has-link-grey -link" href="/tags/%EC%84%9C%EB%B2%84%EC%82%AC%EC%9D%B4%EB%93%9C-%EA%B0%9C%EB%B0%9C%ED%99%98%EA%B2%BD%EA%B5%AC%EC%84%B1/" rel="tag">서버사이드_개발환경구성</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">관련 글</h3>
+        <div class="popular-posts">
+            <ul class="popular-posts"><li class="popular-posts-item"><div class="popular-posts-title"><h3><a href="/posts/backend/serverside-typescript-setting-01/" title="Monolithic 서버사이드 타입스크립트 세팅 01" rel="bookmark">Monolithic 서버사이드 타입스크립트 세팅 01</a></h3></div></li><li class="popular-posts-item"><div class="popular-posts-title"><h3><a href="/posts/backend/serverside-typescript-setting-03/" title="Monolithic 서버사이드 타입스크립트 세팅 03" rel="bookmark">Monolithic 서버사이드 타입스크립트 세팅 03</a></h3></div></li><li class="popular-posts-item"><div class="popular-posts-title"><h3><a href="/posts/backend/nest-todo-api-demo/" title="Nest + TypeORM TODO API 만들기" rel="bookmark">Nest + TypeORM TODO API 만들기</a></h3></div></li><li class="popular-posts-item"><div class="popular-posts-title"><h3><a href="/posts/backend/nestjs-quicklearn-01/" title="NestJS 빠르게 배우기 01" rel="bookmark">NestJS 빠르게 배우기 01</a></h3></div></li><li class="popular-posts-item"><div class="popular-posts-title"><h3><a href="/posts/backend/nestjs-quicklearn-03/" title="NestJS 빠르게 배우기 03" rel="bookmark">NestJS 빠르게 배우기 03</a></h3></div></li></ul>
+        </div>
+    </div>    
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/posts/backend/serverside-typescript-setting-03/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">Monolithic 서버사이드 타입스크립트 세팅 03</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/posts/backend/serverside-typescript-setting-01/">
+                <span class="level-item">Monolithic 서버사이드 타입스크립트 세팅 01</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">댓글</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '91ddc41ab35ce7e007bc',
+        clientSecret: '3c8e6dfed82df844abf72dcf101446a3990abe0e',
+        id: 'eb323ff9531a96d2972e871b656a7060',
+        repo: 'https://github.com/changhoi/changhoi.github.io',
+        owner: 'changhoi',
+        admin: ["changhoi"],
+        createIssueManually: false,
+        distractionFreeMode: false
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
+
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level">
+            <div class="level-item has-text-centered" style="flex-shrink: 1">
+                <div>
+                    
+                    <figure class="image is-128x128 has-mb-6">
+                        <img class="is-rounded" src="https://avatars2.githubusercontent.com/u/34329147?s=400&amp;u=9d1b1dc88bc8ee5965f35b0160780264c3619eb6&amp;v=4" alt="Changhoi">
+                    </figure>
+                    
+                    <p class="is-size-4 is-block">
+                        Changhoi
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        changhoi
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>Seoul, Korea</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level is-mobile">
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        포스트
+                    </p>
+                    <a href="/archives">
+                        <p class="title has-text-weight-normal">
+                            40
+                        </p>
+                    </a>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        카테고리
+                    </p>
+                    <a href="/categories">
+                        <p class="title has-text-weight-normal">
+                            8
+                        </p>
+                    </a>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        태그
+                    </p>
+                    <a href="/tags">
+                        <p class="title has-text-weight-normal">
+                            46
+                        </p>
+                    </a>
+                </div>
+            </div>
+        </nav>
+        
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="https://github.com/changhoi" target="_blank" rel="external nofollow noopener noreferrer">
+                팔로우</a>
+        </div>
+        
+        
+        
+        <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="external nofollow noopener noreferrer" title="Github" href="https://github.com/changhoi">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="external nofollow noopener noreferrer" title="Facebook" href="https://www.facebook.com/profile.php?id=100014499787423">
+                
+                <i class="fab fa-facebook"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="external nofollow noopener noreferrer" title="Email" href="mailto:0417kch@naver.com">
+                
+                <i class="fas fa-envelope-square"></i>
+                
+            </a>
+            
+        </div>
+        
+    </div>
+</div>
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                카테고리
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/categories/backend/">
+            <span class="level-start">
+                <span class="level-item">backend</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">10</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/docker/">
+            <span class="level-start">
+                <span class="level-item">docker</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">5</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/etc/">
+            <span class="level-start">
+                <span class="level-item">etc</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">8</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/linux/">
+            <span class="level-start">
+                <span class="level-item">linux</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">3</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/logs/">
+            <span class="level-start">
+                <span class="level-item">logs</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">6</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/rxjs/">
+            <span class="level-start">
+                <span class="level-item">rxjs</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/serverless/">
+            <span class="level-start">
+                <span class="level-item">serverless</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">6</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/theory/">
+            <span class="level-start">
+                <span class="level-item">theory</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                태그
+            </h3>
+            <div class="field is-grouped is-grouped-multiline">
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/NestJS-GraphQL-%EB%B9%A0%EB%A5%B4%EA%B2%8C-%EB%B0%B0%EC%9A%B0%EA%B8%B0/">
+                        <span class="tag">NestJS_GraphQL_빠르게_배우기</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/NestJS-%EB%B9%A0%EB%A5%B4%EA%B2%8C-%EB%B0%B0%EC%9A%B0%EA%B8%B0/">
+                        <span class="tag">NestJS_빠르게_배우기</span>
+                        <span class="tag is-grey">5</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/RxJS-%EB%B9%A0%EB%A5%B4%EA%B2%8C-%EB%B0%B0%EC%9A%B0%EA%B8%B0/">
+                        <span class="tag">RxJS_빠르게_배우기</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/architecture/">
+                        <span class="tag">architecture</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/arcitecture/">
+                        <span class="tag">arcitecture</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/aws/">
+                        <span class="tag">aws</span>
+                        <span class="tag is-grey">5</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/best-practice/">
+                        <span class="tag">best_practice</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/deployment/">
+                        <span class="tag">deployment</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/docker/">
+                        <span class="tag">docker</span>
+                        <span class="tag is-grey">7</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/docker-container/">
+                        <span class="tag">docker_container</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/dockerfile/">
+                        <span class="tag">dockerfile</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/dynamodb/">
+                        <span class="tag">dynamodb</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/ecs/">
+                        <span class="tag">ecs</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/fargate/">
+                        <span class="tag">fargate</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/functional-programming/">
+                        <span class="tag">functional_programming</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/go/">
+                        <span class="tag">go</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/graphql/">
+                        <span class="tag">graphql</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/interview/">
+                        <span class="tag">interview</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/k8s/">
+                        <span class="tag">k8s</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/lambda/">
+                        <span class="tag">lambda</span>
+                        <span class="tag is-grey">5</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/linux/">
+                        <span class="tag">linux</span>
+                        <span class="tag is-grey">4</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/linux-cheatsheet/">
+                        <span class="tag">linux_cheatsheet</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/log/">
+                        <span class="tag">log</span>
+                        <span class="tag is-grey">6</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/nat/">
+                        <span class="tag">nat</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/nestjs/">
+                        <span class="tag">nestjs</span>
+                        <span class="tag is-grey">7</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/pattern/">
+                        <span class="tag">pattern</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/react/">
+                        <span class="tag">react</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/react-hooks/">
+                        <span class="tag">react-hooks</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/redux/">
+                        <span class="tag">redux</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/redux-saga/">
+                        <span class="tag">redux-saga</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/redux-thunk/">
+                        <span class="tag">redux-thunk</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/refactoring/">
+                        <span class="tag">refactoring</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/retrospec/">
+                        <span class="tag">retrospec</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/retrospect/">
+                        <span class="tag">retrospect</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/review/">
+                        <span class="tag">review</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/rxjs/">
+                        <span class="tag">rxjs</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/s3/">
+                        <span class="tag">s3</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/serverless/">
+                        <span class="tag">serverless</span>
+                        <span class="tag is-grey">7</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/serverless-%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC-%EB%B9%A0%EB%A5%B4%EA%B2%8C-%EB%B0%B0%EC%9A%B0%EA%B8%B0/">
+                        <span class="tag">serverless_프레임워크_빠르게_배우기</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/swagger/">
+                        <span class="tag">swagger</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/tutorial/">
+                        <span class="tag">tutorial</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/typescript/">
+                        <span class="tag">typescript</span>
+                        <span class="tag is-grey">9</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/ubuntu/">
+                        <span class="tag">ubuntu</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/webpack/">
+                        <span class="tag">webpack</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%EB%8F%84%EC%BB%A4%EB%A1%9C-%EA%B0%9C%EB%B0%9C-%ED%99%98%EA%B2%BD-%EA%B5%AC%EC%B6%95%ED%95%98%EA%B8%B0/">
+                        <span class="tag">도커로_개발_환경_구축하기</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%EC%84%9C%EB%B2%84%EC%82%AC%EC%9D%B4%EB%93%9C-%EA%B0%9C%EB%B0%9C%ED%99%98%EA%B2%BD%EA%B5%AC%EC%84%B1/">
+                        <span class="tag">서버사이드_개발환경구성</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+    
+    
+        <div class="column-right-shadow is-hidden-widescreen is-sticky">
+        
+            
+
+    <div class="card widget" id="toc">
+        <div class="card-content">
+            <div class="menu">
+                <h3 class="menu-label">
+                    카탈로그
+                </h3>
+                <ul class="menu-list"><li>
+        <a class="is-flex" href="#tsconfig">
+        <span class="has-mr-6">1</span>
+        <span>tsconfig</span>
+        </a></li><li>
+        <a class="is-flex" href="#Webpack">
+        <span class="has-mr-6">2</span>
+        <span>Webpack</span>
+        </a></li><li>
+        <a class="is-flex" href="#Swagger">
+        <span class="has-mr-6">3</span>
+        <span>Swagger</span>
+        </a></li><li>
+        <a class="is-flex" href="#후기">
+        <span class="has-mr-6">4</span>
+        <span>후기</span>
+        </a></li><li>
+        <a class="is-flex" href="#Reference">
+        <span class="has-mr-6">5</span>
+        <span>Reference</span>
+        </a></li></ul>
+            </div>
+        </div>
+    </div>
+
+        
+            <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            최근 글
+        </h3>
+        
+        <article class="media">
+            
+            <a href="/posts/rxjs/rxjs-quicklearn-01/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://lh3.googleusercontent.com/proxy/UjtyGz20L98R1q0OpkNs3JFKcktKiD3dtR_aGk6qInS_tSBdezQ59V31wD1jw_nVKxjoVUanuPsVY4_oECpJQUYvJ-fY6MacE4Q48qRcpN2eTaJjT873zoLpeWNTM6GTI2iL0AAHI-WpVqBOtRNxmCqgYH8-GuwcWvnQa37qAq2V3m8ffzTC5WuaPXIbBhS3ThQ8XQ-vXYzk10k1O9-lYME0oEQquCThzG2t0KCITBbAub26vmtSgdh9OfU0bQe-winVp85SThbqaFUs_WZ9b7DVNbjLBww0F7zE" alt="RxJS 빠르게 배우기 01 - Overview">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-08-18T15:00:00.000Z">2020-08-19</time></div>
+                    <a href="/posts/rxjs/rxjs-quicklearn-01/" class="title has-link-black-ter is-size-6 has-text-weight-normal">RxJS 빠르게 배우기 01 - Overview</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/rxjs/">rxjs</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/posts/logs/20200807/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/logo.jpg" alt="초기 스타트업 회고">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-08-06T15:00:00.000Z">2020-08-07</time></div>
+                    <a href="/posts/logs/20200807/" class="title has-link-black-ter is-size-6 has-text-weight-normal">초기 스타트업 회고</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/logs/">logs</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/posts/backend/go-lambda-try/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://upload.wikimedia.org/wikipedia/commons/d/df/Go_gopher_app_engine_color.jpg" alt="Golang + Lambda로 신규 유저 정보 이메일로 보내기 삽질기">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-07-08T15:00:00.000Z">2020-07-09</time></div>
+                    <a href="/posts/backend/go-lambda-try/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Golang + Lambda로 신규 유저 정보 이메일로 보내기 삽질기</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/backend/">backend</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/posts/etc/refactoring-practice/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://c0.wallpaperflare.com/preview/600/243/618/javascript-vscode-editor-code.jpg" alt="리팩토링 실습하기">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-06-18T15:00:00.000Z">2020-06-19</time></div>
+                    <a href="/posts/etc/refactoring-practice/" class="title has-link-black-ter is-size-6 has-text-weight-normal">리팩토링 실습하기</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/etc/">etc</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/posts/etc/this-is-linux-book-review/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/2020-05-30-book-review/book.jpeg" alt="이것이 리눅스다 with RedHat CentOS 8 간단 리뷰">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-29T15:00:00.000Z">2020-05-30</time></div>
+                    <a href="/posts/etc/this-is-linux-book-review/" class="title has-link-black-ter is-size-6 has-text-weight-normal">이것이 리눅스다 with RedHat CentOS 8 간단 리뷰</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/etc/">etc</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+        
+        </div>
+    
+</div>
+
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only has-order-3 column-right is-sticky">
+    
+        
+
+    <div class="card widget" id="toc">
+        <div class="card-content">
+            <div class="menu">
+                <h3 class="menu-label">
+                    카탈로그
+                </h3>
+                <ul class="menu-list"><li>
+        <a class="is-flex" href="#tsconfig">
+        <span class="has-mr-6">1</span>
+        <span>tsconfig</span>
+        </a></li><li>
+        <a class="is-flex" href="#Webpack">
+        <span class="has-mr-6">2</span>
+        <span>Webpack</span>
+        </a></li><li>
+        <a class="is-flex" href="#Swagger">
+        <span class="has-mr-6">3</span>
+        <span>Swagger</span>
+        </a></li><li>
+        <a class="is-flex" href="#후기">
+        <span class="has-mr-6">4</span>
+        <span>후기</span>
+        </a></li><li>
+        <a class="is-flex" href="#Reference">
+        <span class="has-mr-6">5</span>
+        <span>Reference</span>
+        </a></li></ul>
+            </div>
+        </div>
+    </div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            최근 글
+        </h3>
+        
+        <article class="media">
+            
+            <a href="/posts/rxjs/rxjs-quicklearn-01/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://lh3.googleusercontent.com/proxy/UjtyGz20L98R1q0OpkNs3JFKcktKiD3dtR_aGk6qInS_tSBdezQ59V31wD1jw_nVKxjoVUanuPsVY4_oECpJQUYvJ-fY6MacE4Q48qRcpN2eTaJjT873zoLpeWNTM6GTI2iL0AAHI-WpVqBOtRNxmCqgYH8-GuwcWvnQa37qAq2V3m8ffzTC5WuaPXIbBhS3ThQ8XQ-vXYzk10k1O9-lYME0oEQquCThzG2t0KCITBbAub26vmtSgdh9OfU0bQe-winVp85SThbqaFUs_WZ9b7DVNbjLBww0F7zE" alt="RxJS 빠르게 배우기 01 - Overview">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-08-18T15:00:00.000Z">2020-08-19</time></div>
+                    <a href="/posts/rxjs/rxjs-quicklearn-01/" class="title has-link-black-ter is-size-6 has-text-weight-normal">RxJS 빠르게 배우기 01 - Overview</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/rxjs/">rxjs</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/posts/logs/20200807/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/logo.jpg" alt="초기 스타트업 회고">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-08-06T15:00:00.000Z">2020-08-07</time></div>
+                    <a href="/posts/logs/20200807/" class="title has-link-black-ter is-size-6 has-text-weight-normal">초기 스타트업 회고</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/logs/">logs</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/posts/backend/go-lambda-try/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://upload.wikimedia.org/wikipedia/commons/d/df/Go_gopher_app_engine_color.jpg" alt="Golang + Lambda로 신규 유저 정보 이메일로 보내기 삽질기">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-07-08T15:00:00.000Z">2020-07-09</time></div>
+                    <a href="/posts/backend/go-lambda-try/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Golang + Lambda로 신규 유저 정보 이메일로 보내기 삽질기</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/backend/">backend</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/posts/etc/refactoring-practice/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://c0.wallpaperflare.com/preview/600/243/618/javascript-vscode-editor-code.jpg" alt="리팩토링 실습하기">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-06-18T15:00:00.000Z">2020-06-19</time></div>
+                    <a href="/posts/etc/refactoring-practice/" class="title has-link-black-ter is-size-6 has-text-weight-normal">리팩토링 실습하기</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/etc/">etc</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/posts/etc/this-is-linux-book-review/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/2020-05-30-book-review/book.jpeg" alt="이것이 리눅스다 with RedHat CentOS 8 간단 리뷰">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-29T15:00:00.000Z">2020-05-30</time></div>
+                    <a href="/posts/etc/this-is-linux-book-review/" class="title has-link-black-ter is-size-6 has-text-weight-normal">이것이 리눅스다 with RedHat CentOS 8 간단 리뷰</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/etc/">etc</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/logo.jpg" alt="Monolithic 서버사이드 타입스크립트 세팅 02" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 changhoi&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank" rel="external nofollow noopener noreferrer">Hexo</a> & <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="external nofollow noopener noreferrer">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="external nofollow noopener noreferrer" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="external nofollow noopener noreferrer" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="external nofollow noopener noreferrer" title="Github" href="https://github.com/changhoi">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("ko");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'https://changhoi.github.io',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" rel="external nofollow noopener noreferrer" target="_blank">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="Zurück nach oben" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="입력 하세요...">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '포스트',
+                PAGES: '페이지',
+                CATEGORIES: '카테고리',
+                TAGS: '태그',
+                UNTITLED: '(제목없음)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

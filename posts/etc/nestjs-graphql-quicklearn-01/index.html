@@ -1,0 +1,1354 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <link rel="canonical" href="https://changhoi.github.io/posts/etc/nestjs-graphql-quicklearn-01/">
+    <meta charset="utf-8">
+
+<meta name="generator" content="Hexo 4.2.0">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<title>NestJS GraphQL 빠르게 배우기 01 - CH DEVLOG</title>
+
+
+    <meta name="description" content="프로젝트에 도입할 그래프큐엘 서버를 구성하기 위해서 NestJS에서 그래프큐엘이 어떻게 구성되어야 하는지에 대해서 공부해보려고 한다. 이 시리즈는 NestJS 공식 문서에서 제공해주는 내용을 해석한 내용을 적당히 가감해서 정리한 글이 될 예정이다.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NestJS GraphQL 빠르게 배우기 01">
+<meta property="og:url" content="https://changhoi.github.io/posts/etc/nestjs-graphql-quicklearn-01/">
+<meta property="og:site_name" content="CH DEVLOG">
+<meta property="og:description" content="프로젝트에 도입할 그래프큐엘 서버를 구성하기 위해서 NestJS에서 그래프큐엘이 어떻게 구성되어야 하는지에 대해서 공부해보려고 한다. 이 시리즈는 NestJS 공식 문서에서 제공해주는 내용을 해석한 내용을 적당히 가감해서 정리한 글이 될 예정이다.">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://rohanfaiyaz.com/img/nestjs-graphql.png">
+<meta property="article:published_time" content="2020-03-27T15:00:00.000Z">
+<meta property="article:modified_time" content="2020-08-20T10:58:19.554Z">
+<meta property="article:author" content="changhoi">
+<meta property="article:tag" content="nestjs">
+<meta property="article:tag" content="graphql">
+<meta property="article:tag" content="NestJS_GraphQL_빠르게_배우기">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://rohanfaiyaz.com/img/nestjs-graphql.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.ico">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149480446-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-149480446-1');
+</script>
+
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+<link rel="alternate" href="/rss2.xml" title="CH DEVLOG" type="application/rss+xml">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/logo.jpg" alt="NestJS GraphQL 빠르게 배우기 01" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item" href="/">Home</a>
+                
+                <a class="navbar-item" href="/archives">Archives</a>
+                
+                <a class="navbar-item" href="/tags">Tags</a>
+                
+                <a class="navbar-item" href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="external nofollow noopener noreferrer" title="Github" href="https://github.com/changhoi">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="카탈로그" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="검색" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-image">
+        <span class="image is-7by1">
+            <img class="thumbnail" src="https://rohanfaiyaz.com/img/nestjs-graphql.png" alt="NestJS GraphQL 빠르게 배우기 01">
+        </span>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-03-27T15:00:00.000Z">2020-03-28</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/etc/">etc</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    13분 읽기 (대략 1932 단어)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                NestJS GraphQL 빠르게 배우기 01
+            
+        </h1>
+        <div class="content">
+            <p>프로젝트에 도입할 그래프큐엘 서버를 구성하기 위해서 NestJS에서 그래프큐엘이 어떻게 구성되어야 하는지에 대해서 공부해보려고 한다. 이 시리즈는 <a href="https://docs.nestjs.com/graphql/quick-start" rel="external nofollow noopener noreferrer" target="_blank">NestJS 공식 문서</a>에서 제공해주는 내용을 해석한 내용을 적당히 가감해서 정리한 글이 될 예정이다.</p>
+<a id="more"></a>
+
+<h2 id="NestJS에서의-GraphQL"><a href="#NestJS에서의-GraphQL" class="headerlink" title="NestJS에서의 GraphQL"></a>NestJS에서의 GraphQL</h2><p>GraphQL은 API를 만들기 위한 쿼리 언어이다. RestAPI에서 생기는 몇 가지 문제들을 해결해 줄 수 있기도 하다.</p>
+<p>이번 글에서는 GraphQL에 대한 기본적인 이해를 전제로 하고 있다. 그리고 어떻게 <code>@nestjs/graphql</code>을 사용할지에 대해 집중하고 있다. <code>GraphQLModule</code>은 <code>Apollo</code> 서버를 래핑하고 있는 모듈이다.</p>
+<h3 id="설치하기"><a href="#설치하기" class="headerlink" title="설치하기"></a>설치하기</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add @nestjs/graphql graphql-tools graphql</span><br></pre></td></tr></table></figure>
+
+<p>위 명령어로 의존성을 설치해줄 수 있다. 또한 <code>express</code> 기반의 서버라면 <code>apollo-server-express</code>를 추가로 설치해야 한다.</p>
+<h3 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h3><p>Nest는 GraphQL 앱을 만들 두 가지 방법을 제안하는데, 하나는 <strong>code first</strong> 방식이고, 다른 하나는 <strong>schema first</strong> 방식이다. 잘 맞는 방법 중 하나를 선택하면 된다.</p>
+<p><strong>code first</strong> 방식은 데코레이터와 타입스크립트의 클래스를 사용해서 GraphQL 스키마와 상응하는 것을 만들게 되는데, 이 방법은 타입스크립트만을 배타적으로 사용하기 위한 경우 알맞는 방식이다.</p>
+<p><strong>schema first</strong> 방식에서는 소스의 원천 (source of truth)가 <code>GraphQL Schema Definition Language file</code> (<code>GraphQL SDL</code>)이다. SDL은 특정 언어와 관계 없는 방향으로 스키마 파일들을 다른 플랫폼 사이에서 제공해준다. Nest는 자동적으로 타입스크립트 정의를 GraphQL 스키마에 기반해서 생성해주게 된다.</p>
+<h3 id="GraphQL-amp-TypeScript-사용하기"><a href="#GraphQL-amp-TypeScript-사용하기" class="headerlink" title="GraphQL &amp; TypeScript 사용하기"></a>GraphQL &amp; TypeScript 사용하기</h3><p>패키지가 설치된 다음, <code>GraphQLModule</code>과 설정을 <code>forRoot()</code> 스태틱 메서드를 사용해서 임포트 할 수 있다.</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Module &#125; <span class="keyword">from</span> <span class="string">"@nestjs/common"</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; GraphQLModule &#125; <span class="keyword">from</span> <span class="string">"@nestjs/graphql"</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Module</span>(&#123;</span><br><span class="line">  imports: [GraphQLModule.forRoot(&#123;&#125;)]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppModule &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>forRoot()</code> 메서드는 옵션 오브젝트를 인자 값으로 받는데, 이 값은 Apollo 인스턴스를 통과하게 된다. 즉, 옵션들이 <code>ApolloServer</code>의 생성자로 들어가게 된다는 뜻이다. 예를 들어서 playground 기능과 debug모드를 끄고 싶으면 아래와 같이 옵션 값을 넘겨주면 된다.</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;Module&#125; <span class="keyword">from</span> <span class="string">"@nestjs/common"</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;GraphQLModule&#125; <span class="keyword">from</span> <span class="string">"@nestjs/graphql"</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Module</span>(&#123;</span><br><span class="line">    imports: [</span><br><span class="line">        GraphQLModule.forRoot(&#123;</span><br><span class="line">            debug:<span class="literal">false</span>,</span><br><span class="line">            playground: <span class="literal">false</span></span><br><span class="line">        &#125;)</span><br><span class="line">    ]</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>자세한 설정 값은 <a href="https://www.apollographql.com/docs/apollo-server/v2/api/apollo-server.html#constructor-options-lt-ApolloServer-gt" rel="external nofollow noopener noreferrer" target="_blank">이 링크</a>에서 확인해보자.</p>
+<h3 id="복수의-엔드포인트들"><a href="#복수의-엔드포인트들" class="headerlink" title="복수의 엔드포인트들"></a>복수의 엔드포인트들</h3><p><code>@nestjs/graphql</code> 모듈의 유용한 기능 중 하나는 복수의 엔드포인트를 제공해줄 수 있다는 점이다. 이 기능으로 어던 모듈이 어떤 엔드포인트에 속해있어야 하는지를 결정할 수 있다. 기본적으로 <code>GraphQL</code>은 Resolver를 전체 앱을 대상으로 해서 찾게 된다. 이러한 스캔을 모듈 단위로 제한하려면 <code>include</code> 프로퍼티를 사용해야 한다.</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">GraphQLModule.forRoot(&#123;</span><br><span class="line">  include: [CatsModule]</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="Code-first"><a href="#Code-first" class="headerlink" title="Code first"></a>Code first</h3><p><code>Code First</code> 방법으로는 데코레이터와 타입스크립트의 클래스로 GraphQL 스키마와 상응하는 것을 만들 수 있다고 했는데, 이러한 방법을 사용하려면, <code>autoSchemaFile</code>을 옵션에 달아줘야 한다.</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">GraphQLModule.forRoot(&#123;</span><br><span class="line">  autoSchemaFile: join(process.cwd(), <span class="string">"src/schema.gql"</span>)</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p><code>autoSchemaFile</code> 프로퍼티 값은 자동적으로 생성될 스키마가 생성될 위치를 넣어준다. 스키마가 <code>on-the-fly</code>(값이 변경될 때마다 변경되는) 메모리 값에 넣어줄 수도 있는데 아래와 같이 <code>autoSchemaFile</code> 옵션 값으로 <code>true</code>를 넣어줘야 한다.</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">GraphQLModule.forRoot(&#123;</span><br><span class="line">  autoSchemaFile: <span class="literal">true</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://github.com/nestjs/nest/tree/master/sample/23-graphql-code-first" rel="external nofollow noopener noreferrer" target="_blank">이 링크</a>에서 동작하는 코드 예시를 확인해볼 수 있다.</p>
+<h3 id="Schema-first"><a href="#Schema-first" class="headerlink" title="Schema first"></a>Schema first</h3><p><code>Schema First</code> 방법으로는, 옵션 객체에 <code>typePaths</code> 프로퍼티를 넣어줘야 한다. 이 옵션은 <code>GraphQLModule</code>이 GraphQL SDL 스키마 정의 파일을 어디서 찾아야 하는지를 알려주는 것이다. 이 파일들은 메모리에 묶이게 된다. 이건 스키마들을 몇 개의 파일들로 나누고, resolver 근처에 위치시킬 수 있게 해준다.</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">GraphQLModule.forRoot(&#123;</span><br><span class="line">  typePaths: [<span class="string">"./**/*.graphql"</span>]</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>아마도 해당 SDL 타입과 일치하는 타입스크립트 정의들이 필요할 수 있다. 이러한 타입 정의를 만들기 위해 직접 코드를 쓰는 작업은 귀찮고 지루하다. 또한 수작업으로 하게 되면 <code>source of truth</code> 원칙을 어기게 되고 수정시, 두 번의 수정 작업을 거쳐야 한다. 이 부분을 해결하기 위해서 <code>@nestjs/graphql</code> 패키지는 자동적으로 AST(<a href="https://en.wikipedia.org/wiki/Abstract_syntax_tree" rel="external nofollow noopener noreferrer" target="_blank">Abstract Syntax Tree</a>)로부터 타입 정의를 생성해준다. 이 기능을 사용하려면 <code>definitions</code> 옵션을 추가해줘야 한다.</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">GraphQLModule.forRoot(&#123;</span><br><span class="line">  typePaths: [<span class="string">"./**/*.graphql"</span>],</span><br><span class="line">  definitions: &#123;</span><br><span class="line">    path: join(process.cwd(), <span class="string">"src/graphql.ts"</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p><code>definitions</code>안에 있는 <code>path</code>는 Typescript Output이 어디에 저장될지를 정하는 역할을 해준다. 기본 값으로 모든 생성된 타입스크립트 타입들은 <code>interface</code>로 만들어진다. <code>class</code>로 만들고 싶으면 <code>outputAs</code> 프로퍼티에 값을 <code>class</code>로 두면 된다.</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">GraphQLModule.forRoot(&#123;</span><br><span class="line">  typePaths: [<span class="string">"./**/*.graphql"</span>],</span><br><span class="line">  definitions: &#123;</span><br><span class="line">    path: join(process.cwd(), <span class="string">"src/graphql.ts"</span>),</span><br><span class="line">    outputAs: <span class="string">"class"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>위 방법은 타입 정의를 앱이 시작할 때마다 동적으로 생성하게 된다. 이 방식 말고 특정 스크립트로 타입이 정의되도록 만들 수도 있다.</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// generate-typings.ts</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; GraphQLDefinitionsFactory &#125; <span class="keyword">from</span> <span class="string">"@nestjs/graphql"</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; join &#125; <span class="keyword">from</span> <span class="string">"path"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> definitionsFactory = <span class="keyword">new</span> GraphQLDefinitionsFactory();</span><br><span class="line">definitionsFactory.generate(&#123;</span><br><span class="line">  typePaths: [<span class="string">"./src/**/*.graphql"</span>],</span><br><span class="line">  path: join(process.cwd(), <span class="string">"src/graphql.ts"</span>),</span><br><span class="line">  outputAs: <span class="string">"class"</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>위와 같이 설정하면 아래 명령어로 타입을 생성할 수 있다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ts-node generate-typings</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>당연하게도 컴파일 한 다음 node로 동작하게 할 수도 있다.</p>
+</blockquote>
+<p>와치모드를 사용할 수도 있다. 간단하게 <code>generate()</code> 메서드에 <code>watch</code> 옵션을 <code>true</code>로 해서 넣어주면 된다.</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">definitionsFactory.generate(&#123;</span><br><span class="line">  typePaths: [<span class="string">"./src/**/*.graphql"</span>],</span><br><span class="line">  path: join(process.cwd(), <span class="string">"src/graphql.ts"</span>),</span><br><span class="line">  outputAs: <span class="string">"class"</span>,</span><br><span class="line">  watch: <span class="literal">true</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>위 방식대로 동작하는 예시를 <a href="https://github.com/nestjs/nest/tree/master/sample/12-graphql-schema-first" rel="external nofollow noopener noreferrer" target="_blank">이 링크</a>에서 확인할 수 있다.</p>
+<h3 id="비동기-설정값"><a href="#비동기-설정값" class="headerlink" title="비동기 설정값"></a>비동기 설정값</h3><p>모듈 옵션을 비동기적으로 해야 하는 경우, <code>forRootAsync()</code> 메서드를 사용할 수 있다. 대부분의 동적 모듈을에서 Nest는 몇 가지 비동기를 처리하는 기술들을 제공해주고 있다. 그 중 하나는 factory 함수를 사용하는 것이다.</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">GraphQLModule.forRootAsync(&#123;</span><br><span class="line">  useFactory: <span class="function"><span class="params">()</span> =&gt;</span> (&#123;</span><br><span class="line">    typePaths: [<span class="string">"./**/*.graphql"</span>]</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>다른 factory provider처럼 Nest의 factory 함수 역시 비동기를 제공하고, 의존성 주입을 <code>inject</code>옵션을 통해서 사용할 수 있다.</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">GraphQLModule.forRootAsync(&#123;</span><br><span class="line">  imports: [ConfigModule],</span><br><span class="line">  useFactory: <span class="keyword">async</span> (configService: ConfigService) =&gt; (&#123;</span><br><span class="line">    typePaths: configService.getString(<span class="string">"GRAPHQL_TYPE_PATHS"</span>)</span><br><span class="line">  &#125;),</span><br><span class="line">  inject: [ConfigService]</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>factory 함수 하나 대신 클래스를 사용할 수도 있다.</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">GraphQLModule.forRootAsync(&#123;</span><br><span class="line">  useClass: GqlConfigService</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>위 예시에서 <code>GqlConfigService</code>는 옵션 객체를 만들기 위해서 <code>GraphQLModule</code> 내부에서 인스턴스화 된다. <code>GqlConfigService</code>는 <code>GqlOptionsFactory</code> 인터페이스를 <code>implements</code> 하고 있어야 한다. <code>GraphQLModule</code>은 <code>createGqlOptions</code> 메서드를 호출하게 될 것이다.</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Injectable</span>()</span><br><span class="line"><span class="keyword">class</span> GqlConfigService <span class="keyword">implements</span> GqlOptionsFactory &#123;</span><br><span class="line">  createGqlOptions(): GqlModuleOptions &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      typePaths: [<span class="string">"./**/*.graphql"</span>]</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="후기"><a href="#후기" class="headerlink" title="후기"></a>후기</h2><p>NestJS 7.0 버전에서는 <code>@nestjs/graphql</code> 패키지가 많은 변화가 있다고 하긴 했는데, 설정부터 많은 옵션이 있는 것 같다. GraphQL 스키마 정의를 하는 방법도 선택할 수 있고, 타입을 자동으로 만들어주는 기능 등은 좋은 것 같다.</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="https://trilon.io/blog/announcing-nestjs-7-whats-new?fbclid=IwAR2b_7Jtpm96Ysvo_-Z7aUxPHpQmJrWLoNl4v15asay6Mg3CN25rHCEjCoM" rel="external nofollow noopener noreferrer" target="_blank">https://trilon.io/blog/announcing-nestjs-7-whats-new?fbclid=IwAR2b_7Jtpm96Ysvo_-Z7aUxPHpQmJrWLoNl4v15asay6Mg3CN25rHCEjCoM</a></li>
+<li><a href="https://docs.nestjs.com/graphql/quick-start" rel="external nofollow noopener noreferrer" target="_blank">https://docs.nestjs.com/graphql/quick-start</a></li>
+</ul>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/NestJS-GraphQL-%EB%B9%A0%EB%A5%B4%EA%B2%8C-%EB%B0%B0%EC%9A%B0%EA%B8%B0/" rel="tag">NestJS_GraphQL_빠르게_배우기</a>, <a class="has-link-grey -link" href="/tags/graphql/" rel="tag">graphql</a>, <a class="has-link-grey -link" href="/tags/nestjs/" rel="tag">nestjs</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">관련 글</h3>
+        <div class="popular-posts">
+            <ul class="popular-posts"><li class="popular-posts-item"><div class="popular-posts-title"><h3><a href="/posts/backend/nest-todo-api-demo/" title="Nest + TypeORM TODO API 만들기" rel="bookmark">Nest + TypeORM TODO API 만들기</a></h3></div></li><li class="popular-posts-item"><div class="popular-posts-title"><h3><a href="/posts/backend/nestjs-quicklearn-01/" title="NestJS 빠르게 배우기 01" rel="bookmark">NestJS 빠르게 배우기 01</a></h3></div></li><li class="popular-posts-item"><div class="popular-posts-title"><h3><a href="/posts/backend/nestjs-quicklearn-03/" title="NestJS 빠르게 배우기 03" rel="bookmark">NestJS 빠르게 배우기 03</a></h3></div></li><li class="popular-posts-item"><div class="popular-posts-title"><h3><a href="/posts/backend/nestjs-quicklearn-02/" title="NestJS 빠르게 배우기 02" rel="bookmark">NestJS 빠르게 배우기 02</a></h3></div></li><li class="popular-posts-item"><div class="popular-posts-title"><h3><a href="/posts/backend/nestjs-quicklearn-04/" title="NestJS 빠르게 배우기 04" rel="bookmark">NestJS 빠르게 배우기 04</a></h3></div></li></ul>
+        </div>
+    </div>    
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/posts/etc/husky/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">Husky로 Git hooks 관리하기</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/posts/etc/cloudnative-devops-with-k8s-book-review/">
+                <span class="level-item">Cloud Native Devops with Kubernetes 간단 리뷰</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">댓글</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '91ddc41ab35ce7e007bc',
+        clientSecret: '3c8e6dfed82df844abf72dcf101446a3990abe0e',
+        id: 'e7ffc755f021fadfea1cb5a9f5d420a9',
+        repo: 'https://github.com/changhoi/changhoi.github.io',
+        owner: 'changhoi',
+        admin: ["changhoi"],
+        createIssueManually: false,
+        distractionFreeMode: false
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
+
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level">
+            <div class="level-item has-text-centered" style="flex-shrink: 1">
+                <div>
+                    
+                    <figure class="image is-128x128 has-mb-6">
+                        <img class="is-rounded" src="https://avatars2.githubusercontent.com/u/34329147?s=400&amp;u=9d1b1dc88bc8ee5965f35b0160780264c3619eb6&amp;v=4" alt="Changhoi">
+                    </figure>
+                    
+                    <p class="is-size-4 is-block">
+                        Changhoi
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        changhoi
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>Seoul, Korea</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level is-mobile">
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        포스트
+                    </p>
+                    <a href="/archives">
+                        <p class="title has-text-weight-normal">
+                            40
+                        </p>
+                    </a>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        카테고리
+                    </p>
+                    <a href="/categories">
+                        <p class="title has-text-weight-normal">
+                            8
+                        </p>
+                    </a>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        태그
+                    </p>
+                    <a href="/tags">
+                        <p class="title has-text-weight-normal">
+                            46
+                        </p>
+                    </a>
+                </div>
+            </div>
+        </nav>
+        
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="https://github.com/changhoi" target="_blank" rel="external nofollow noopener noreferrer">
+                팔로우</a>
+        </div>
+        
+        
+        
+        <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="external nofollow noopener noreferrer" title="Github" href="https://github.com/changhoi">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="external nofollow noopener noreferrer" title="Facebook" href="https://www.facebook.com/profile.php?id=100014499787423">
+                
+                <i class="fab fa-facebook"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="external nofollow noopener noreferrer" title="Email" href="mailto:0417kch@naver.com">
+                
+                <i class="fas fa-envelope-square"></i>
+                
+            </a>
+            
+        </div>
+        
+    </div>
+</div>
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                카테고리
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/categories/backend/">
+            <span class="level-start">
+                <span class="level-item">backend</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">10</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/docker/">
+            <span class="level-start">
+                <span class="level-item">docker</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">5</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/etc/">
+            <span class="level-start">
+                <span class="level-item">etc</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">8</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/linux/">
+            <span class="level-start">
+                <span class="level-item">linux</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">3</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/logs/">
+            <span class="level-start">
+                <span class="level-item">logs</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">6</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/rxjs/">
+            <span class="level-start">
+                <span class="level-item">rxjs</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/serverless/">
+            <span class="level-start">
+                <span class="level-item">serverless</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">6</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/theory/">
+            <span class="level-start">
+                <span class="level-item">theory</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                태그
+            </h3>
+            <div class="field is-grouped is-grouped-multiline">
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/NestJS-GraphQL-%EB%B9%A0%EB%A5%B4%EA%B2%8C-%EB%B0%B0%EC%9A%B0%EA%B8%B0/">
+                        <span class="tag">NestJS_GraphQL_빠르게_배우기</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/NestJS-%EB%B9%A0%EB%A5%B4%EA%B2%8C-%EB%B0%B0%EC%9A%B0%EA%B8%B0/">
+                        <span class="tag">NestJS_빠르게_배우기</span>
+                        <span class="tag is-grey">5</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/RxJS-%EB%B9%A0%EB%A5%B4%EA%B2%8C-%EB%B0%B0%EC%9A%B0%EA%B8%B0/">
+                        <span class="tag">RxJS_빠르게_배우기</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/architecture/">
+                        <span class="tag">architecture</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/arcitecture/">
+                        <span class="tag">arcitecture</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/aws/">
+                        <span class="tag">aws</span>
+                        <span class="tag is-grey">5</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/best-practice/">
+                        <span class="tag">best_practice</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/deployment/">
+                        <span class="tag">deployment</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/docker/">
+                        <span class="tag">docker</span>
+                        <span class="tag is-grey">7</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/docker-container/">
+                        <span class="tag">docker_container</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/dockerfile/">
+                        <span class="tag">dockerfile</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/dynamodb/">
+                        <span class="tag">dynamodb</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/ecs/">
+                        <span class="tag">ecs</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/fargate/">
+                        <span class="tag">fargate</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/functional-programming/">
+                        <span class="tag">functional_programming</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/go/">
+                        <span class="tag">go</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/graphql/">
+                        <span class="tag">graphql</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/interview/">
+                        <span class="tag">interview</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/k8s/">
+                        <span class="tag">k8s</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/lambda/">
+                        <span class="tag">lambda</span>
+                        <span class="tag is-grey">5</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/linux/">
+                        <span class="tag">linux</span>
+                        <span class="tag is-grey">4</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/linux-cheatsheet/">
+                        <span class="tag">linux_cheatsheet</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/log/">
+                        <span class="tag">log</span>
+                        <span class="tag is-grey">6</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/nat/">
+                        <span class="tag">nat</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/nestjs/">
+                        <span class="tag">nestjs</span>
+                        <span class="tag is-grey">7</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/pattern/">
+                        <span class="tag">pattern</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/react/">
+                        <span class="tag">react</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/react-hooks/">
+                        <span class="tag">react-hooks</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/redux/">
+                        <span class="tag">redux</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/redux-saga/">
+                        <span class="tag">redux-saga</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/redux-thunk/">
+                        <span class="tag">redux-thunk</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/refactoring/">
+                        <span class="tag">refactoring</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/retrospec/">
+                        <span class="tag">retrospec</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/retrospect/">
+                        <span class="tag">retrospect</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/review/">
+                        <span class="tag">review</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/rxjs/">
+                        <span class="tag">rxjs</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/s3/">
+                        <span class="tag">s3</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/serverless/">
+                        <span class="tag">serverless</span>
+                        <span class="tag is-grey">7</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/serverless-%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC-%EB%B9%A0%EB%A5%B4%EA%B2%8C-%EB%B0%B0%EC%9A%B0%EA%B8%B0/">
+                        <span class="tag">serverless_프레임워크_빠르게_배우기</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/swagger/">
+                        <span class="tag">swagger</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/tutorial/">
+                        <span class="tag">tutorial</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/typescript/">
+                        <span class="tag">typescript</span>
+                        <span class="tag is-grey">9</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/ubuntu/">
+                        <span class="tag">ubuntu</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/webpack/">
+                        <span class="tag">webpack</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%EB%8F%84%EC%BB%A4%EB%A1%9C-%EA%B0%9C%EB%B0%9C-%ED%99%98%EA%B2%BD-%EA%B5%AC%EC%B6%95%ED%95%98%EA%B8%B0/">
+                        <span class="tag">도커로_개발_환경_구축하기</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%EC%84%9C%EB%B2%84%EC%82%AC%EC%9D%B4%EB%93%9C-%EA%B0%9C%EB%B0%9C%ED%99%98%EA%B2%BD%EA%B5%AC%EC%84%B1/">
+                        <span class="tag">서버사이드_개발환경구성</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+    
+    
+        <div class="column-right-shadow is-hidden-widescreen is-sticky">
+        
+            
+
+    <div class="card widget" id="toc">
+        <div class="card-content">
+            <div class="menu">
+                <h3 class="menu-label">
+                    카탈로그
+                </h3>
+                <ul class="menu-list"><li>
+        <a class="is-flex" href="#NestJS에서의-GraphQL">
+        <span class="has-mr-6">1</span>
+        <span>NestJS에서의 GraphQL</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#설치하기">
+        <span class="has-mr-6">1.1</span>
+        <span>설치하기</span>
+        </a></li><li>
+        <a class="is-flex" href="#Overview">
+        <span class="has-mr-6">1.2</span>
+        <span>Overview</span>
+        </a></li><li>
+        <a class="is-flex" href="#GraphQL-amp-TypeScript-사용하기">
+        <span class="has-mr-6">1.3</span>
+        <span>GraphQL & TypeScript 사용하기</span>
+        </a></li><li>
+        <a class="is-flex" href="#복수의-엔드포인트들">
+        <span class="has-mr-6">1.4</span>
+        <span>복수의 엔드포인트들</span>
+        </a></li><li>
+        <a class="is-flex" href="#Code-first">
+        <span class="has-mr-6">1.5</span>
+        <span>Code first</span>
+        </a></li><li>
+        <a class="is-flex" href="#Schema-first">
+        <span class="has-mr-6">1.6</span>
+        <span>Schema first</span>
+        </a></li><li>
+        <a class="is-flex" href="#비동기-설정값">
+        <span class="has-mr-6">1.7</span>
+        <span>비동기 설정값</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#후기">
+        <span class="has-mr-6">2</span>
+        <span>후기</span>
+        </a></li><li>
+        <a class="is-flex" href="#Reference">
+        <span class="has-mr-6">3</span>
+        <span>Reference</span>
+        </a></li></ul>
+            </div>
+        </div>
+    </div>
+
+        
+            <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            최근 글
+        </h3>
+        
+        <article class="media">
+            
+            <a href="/posts/rxjs/rxjs-quicklearn-01/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://lh3.googleusercontent.com/proxy/UjtyGz20L98R1q0OpkNs3JFKcktKiD3dtR_aGk6qInS_tSBdezQ59V31wD1jw_nVKxjoVUanuPsVY4_oECpJQUYvJ-fY6MacE4Q48qRcpN2eTaJjT873zoLpeWNTM6GTI2iL0AAHI-WpVqBOtRNxmCqgYH8-GuwcWvnQa37qAq2V3m8ffzTC5WuaPXIbBhS3ThQ8XQ-vXYzk10k1O9-lYME0oEQquCThzG2t0KCITBbAub26vmtSgdh9OfU0bQe-winVp85SThbqaFUs_WZ9b7DVNbjLBww0F7zE" alt="RxJS 빠르게 배우기 01 - Overview">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-08-18T15:00:00.000Z">2020-08-19</time></div>
+                    <a href="/posts/rxjs/rxjs-quicklearn-01/" class="title has-link-black-ter is-size-6 has-text-weight-normal">RxJS 빠르게 배우기 01 - Overview</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/rxjs/">rxjs</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/posts/logs/20200807/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/logo.jpg" alt="초기 스타트업 회고">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-08-06T15:00:00.000Z">2020-08-07</time></div>
+                    <a href="/posts/logs/20200807/" class="title has-link-black-ter is-size-6 has-text-weight-normal">초기 스타트업 회고</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/logs/">logs</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/posts/backend/go-lambda-try/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://upload.wikimedia.org/wikipedia/commons/d/df/Go_gopher_app_engine_color.jpg" alt="Golang + Lambda로 신규 유저 정보 이메일로 보내기 삽질기">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-07-08T15:00:00.000Z">2020-07-09</time></div>
+                    <a href="/posts/backend/go-lambda-try/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Golang + Lambda로 신규 유저 정보 이메일로 보내기 삽질기</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/backend/">backend</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/posts/etc/refactoring-practice/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://c0.wallpaperflare.com/preview/600/243/618/javascript-vscode-editor-code.jpg" alt="리팩토링 실습하기">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-06-18T15:00:00.000Z">2020-06-19</time></div>
+                    <a href="/posts/etc/refactoring-practice/" class="title has-link-black-ter is-size-6 has-text-weight-normal">리팩토링 실습하기</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/etc/">etc</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/posts/etc/this-is-linux-book-review/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/2020-05-30-book-review/book.jpeg" alt="이것이 리눅스다 with RedHat CentOS 8 간단 리뷰">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-29T15:00:00.000Z">2020-05-30</time></div>
+                    <a href="/posts/etc/this-is-linux-book-review/" class="title has-link-black-ter is-size-6 has-text-weight-normal">이것이 리눅스다 with RedHat CentOS 8 간단 리뷰</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/etc/">etc</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+        
+        </div>
+    
+</div>
+
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only has-order-3 column-right is-sticky">
+    
+        
+
+    <div class="card widget" id="toc">
+        <div class="card-content">
+            <div class="menu">
+                <h3 class="menu-label">
+                    카탈로그
+                </h3>
+                <ul class="menu-list"><li>
+        <a class="is-flex" href="#NestJS에서의-GraphQL">
+        <span class="has-mr-6">1</span>
+        <span>NestJS에서의 GraphQL</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#설치하기">
+        <span class="has-mr-6">1.1</span>
+        <span>설치하기</span>
+        </a></li><li>
+        <a class="is-flex" href="#Overview">
+        <span class="has-mr-6">1.2</span>
+        <span>Overview</span>
+        </a></li><li>
+        <a class="is-flex" href="#GraphQL-amp-TypeScript-사용하기">
+        <span class="has-mr-6">1.3</span>
+        <span>GraphQL & TypeScript 사용하기</span>
+        </a></li><li>
+        <a class="is-flex" href="#복수의-엔드포인트들">
+        <span class="has-mr-6">1.4</span>
+        <span>복수의 엔드포인트들</span>
+        </a></li><li>
+        <a class="is-flex" href="#Code-first">
+        <span class="has-mr-6">1.5</span>
+        <span>Code first</span>
+        </a></li><li>
+        <a class="is-flex" href="#Schema-first">
+        <span class="has-mr-6">1.6</span>
+        <span>Schema first</span>
+        </a></li><li>
+        <a class="is-flex" href="#비동기-설정값">
+        <span class="has-mr-6">1.7</span>
+        <span>비동기 설정값</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#후기">
+        <span class="has-mr-6">2</span>
+        <span>후기</span>
+        </a></li><li>
+        <a class="is-flex" href="#Reference">
+        <span class="has-mr-6">3</span>
+        <span>Reference</span>
+        </a></li></ul>
+            </div>
+        </div>
+    </div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            최근 글
+        </h3>
+        
+        <article class="media">
+            
+            <a href="/posts/rxjs/rxjs-quicklearn-01/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://lh3.googleusercontent.com/proxy/UjtyGz20L98R1q0OpkNs3JFKcktKiD3dtR_aGk6qInS_tSBdezQ59V31wD1jw_nVKxjoVUanuPsVY4_oECpJQUYvJ-fY6MacE4Q48qRcpN2eTaJjT873zoLpeWNTM6GTI2iL0AAHI-WpVqBOtRNxmCqgYH8-GuwcWvnQa37qAq2V3m8ffzTC5WuaPXIbBhS3ThQ8XQ-vXYzk10k1O9-lYME0oEQquCThzG2t0KCITBbAub26vmtSgdh9OfU0bQe-winVp85SThbqaFUs_WZ9b7DVNbjLBww0F7zE" alt="RxJS 빠르게 배우기 01 - Overview">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-08-18T15:00:00.000Z">2020-08-19</time></div>
+                    <a href="/posts/rxjs/rxjs-quicklearn-01/" class="title has-link-black-ter is-size-6 has-text-weight-normal">RxJS 빠르게 배우기 01 - Overview</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/rxjs/">rxjs</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/posts/logs/20200807/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/logo.jpg" alt="초기 스타트업 회고">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-08-06T15:00:00.000Z">2020-08-07</time></div>
+                    <a href="/posts/logs/20200807/" class="title has-link-black-ter is-size-6 has-text-weight-normal">초기 스타트업 회고</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/logs/">logs</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/posts/backend/go-lambda-try/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://upload.wikimedia.org/wikipedia/commons/d/df/Go_gopher_app_engine_color.jpg" alt="Golang + Lambda로 신규 유저 정보 이메일로 보내기 삽질기">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-07-08T15:00:00.000Z">2020-07-09</time></div>
+                    <a href="/posts/backend/go-lambda-try/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Golang + Lambda로 신규 유저 정보 이메일로 보내기 삽질기</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/backend/">backend</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/posts/etc/refactoring-practice/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://c0.wallpaperflare.com/preview/600/243/618/javascript-vscode-editor-code.jpg" alt="리팩토링 실습하기">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-06-18T15:00:00.000Z">2020-06-19</time></div>
+                    <a href="/posts/etc/refactoring-practice/" class="title has-link-black-ter is-size-6 has-text-weight-normal">리팩토링 실습하기</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/etc/">etc</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/posts/etc/this-is-linux-book-review/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/2020-05-30-book-review/book.jpeg" alt="이것이 리눅스다 with RedHat CentOS 8 간단 리뷰">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-29T15:00:00.000Z">2020-05-30</time></div>
+                    <a href="/posts/etc/this-is-linux-book-review/" class="title has-link-black-ter is-size-6 has-text-weight-normal">이것이 리눅스다 with RedHat CentOS 8 간단 리뷰</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/etc/">etc</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/logo.jpg" alt="NestJS GraphQL 빠르게 배우기 01" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 changhoi&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank" rel="external nofollow noopener noreferrer">Hexo</a> & <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="external nofollow noopener noreferrer">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="external nofollow noopener noreferrer" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="external nofollow noopener noreferrer" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="external nofollow noopener noreferrer" title="Github" href="https://github.com/changhoi">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("ko");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'https://changhoi.github.io',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" rel="external nofollow noopener noreferrer" target="_blank">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="Zurück nach oben" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="입력 하세요...">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '포스트',
+                PAGES: '페이지',
+                CATEGORIES: '카테고리',
+                TAGS: '태그',
+                UNTITLED: '(제목없음)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>
