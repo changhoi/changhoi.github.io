@@ -8,8 +8,16 @@
     </url>
 
     <url>
+        <loc>https://changhoi.github.io/posts/rxjs/rxjs-quicklearn-02/</loc>
+        <lastmod>2020-09-17T12:40:13.196Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://changhoi.github.io/posts/rxjs/rxjs-quicklearn-01/</loc>
-        <lastmod>2020-09-08T07:10:26.721Z</lastmod>
+        <lastmod>2020-09-17T12:39:19.930Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
