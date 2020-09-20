@@ -9,11 +9,11 @@
     <atom:link href="/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>개발 과정 기록</description>
-    <pubDate>Sun, 20 Sep 2020 10:11:13 GMT</pubDate>
+    <pubDate>Sun, 20 Sep 2020 10:13:58 GMT</pubDate>
     <generator>http://hexo.io/</generator>
     
     <item>
-      <title>RxJS 빠르게 배우기 03 - Observar &amp; Subscription &amp; Operator</title>
+      <title>RxJS 빠르게 배우기 03 - Observer &amp; Subscription &amp; Operator</title>
       <link>https://changhoi.github.io/posts/rxjs/rxjs-quicklearn-03/</link>
       <guid>https://changhoi.github.io/posts/rxjs/rxjs-quicklearn-03/</guid>
       <pubDate>Sat, 19 Sep 2020 15:00:00 GMT</pubDate>
