@@ -1,27 +1,31 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <link rel="canonical" href="https://changhoi.github.io/categories/serverless/">
+    <link rel="canonical" href="https://changhoi.github.io/posts/books/rxjs-programming-book-review/">
     <meta charset="utf-8">
 
 <meta name="generator" content="Hexo 4.2.0">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-<title>카테고리: serverless - CH DEVLOG</title>
+<title>RxJS 프로그래밍 간단 리뷰 - CH DEVLOG</title>
 
 
-    <meta name="description" content="개발 과정 기록">
-<meta property="og:type" content="website">
-<meta property="og:title" content="CH DEVLOG">
-<meta property="og:url" content="https://changhoi.github.io/categories/serverless/">
+    <meta name="description" content="한빛 미디어의 나는 리뷰어다에서 9월달 미션으로 나온 책 중에 하나인 RxJS 프로그래밍을 받게 됐고, 이번 달에 읽어보게 됐다. 이 글은 이 책에 대한 간단한 리뷰이다.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RxJS 프로그래밍 간단 리뷰">
+<meta property="og:url" content="https://changhoi.github.io/posts/books/rxjs-programming-book-review/">
 <meta property="og:site_name" content="CH DEVLOG">
-<meta property="og:description" content="개발 과정 기록">
+<meta property="og:description" content="한빛 미디어의 나는 리뷰어다에서 9월달 미션으로 나온 책 중에 하나인 RxJS 프로그래밍을 받게 됐고, 이번 달에 읽어보게 됐다. 이 글은 이 책에 대한 간단한 리뷰이다.">
 <meta property="og:locale" content="ko_KR">
-<meta property="og:image" content="https://changhoi.github.io/images/og_image.png">
+<meta property="og:image" content="https://changhoi.github.io/images/2020-09-21-book-review/book.jpeg">
+<meta property="article:published_time" content="2020-09-20T15:00:00.000Z">
+<meta property="article:modified_time" content="2020-09-20T10:35:18.779Z">
 <meta property="article:author" content="changhoi">
+<meta property="article:tag" content="review">
+<meta property="article:tag" content="rxjs">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://changhoi.github.io/images/og_image.png">
+<meta name="twitter:image" content="https://changhoi.github.io/images/2020-09-21-book-review/book.jpeg">
 
 
 
@@ -84,7 +88,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.jpg" alt="CH DEVLOG" height="28">
+                <img src="/images/logo.jpg" alt="RxJS 프로그래밍 간단 리뷰" height="28">
             
             </a>
         </div>
@@ -113,6 +117,10 @@
                     
                 
                 
+                <a class="navbar-item is-hidden-tablet catalogue" title="카탈로그" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
                 
                 <a class="navbar-item search" title="검색" href="javascript:;">
                     <i class="fas fa-search"></i>
@@ -126,342 +134,120 @@
     <section class="section">
         <div class="container">
             <div class="columns">
-                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
+                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-image">
+        <span class="image is-7by1">
+            <img class="thumbnail" src="/images/2020-09-21-book-review/book.jpeg" alt="RxJS 프로그래밍 간단 리뷰">
+        </span>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-09-20T15:00:00.000Z">2020-09-21</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/books/">books</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    2분 읽기 (대략 367 단어)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                RxJS 프로그래밍 간단 리뷰
+            
+        </h1>
+        <div class="content">
+            <p>한빛 미디어의 <strong>나는 리뷰어다</strong>에서 9월달 미션으로 나온 책 중에 하나인 <strong>RxJS 프로그래밍</strong>을 받게 됐고, 이번 달에 읽어보게 됐다. 이 글은 이 책에 대한 간단한 리뷰이다.</p>
+<a id="more"></a>
+
+<p>정말 신기하게도, 이번에도 이거 공부해볼까? 하던 찰나에 이 책이 선정되었고 뽑혀서 받게 되었다. 한빛 미디어 나는 리뷰어다에서는 정말 시기별로 항상 원하던 주제의 책이 선정되고, 받고 읽게 되는 것 같다. 너무 행복함. 아무튼 책과 공식 문서를 같이 봤다. 공식 문서에 나오는 많은 내용을 독자적인 예제로 풀어서 설명해주었다. 잘 읽혀 내려가고, 코드 실행 결과가 따로 표기 되지 않은 경우가 많이 있어서 아쉬운 경우가 있었지만, 직접 쳐보면서 공부하던 중에서는 상관 없었다.</p>
+<p>RxJS에 대해 아무것도 모르면 읽기 너무 좋은 책인 것 같다. 또, 결과적으로 적용하려고 했던 기술 스택에 대해서도 예시와 구체적인 라이브러리까지 어떻게 사용하는지 설명이 나와있다. Redux + RxJS 조합을 결과적으로 경험해보고 싶었는데 책 마지막 부분에 해당 내용이 있어서 마음에 들었다.</p>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/review/" rel="tag">review</a>, <a class="has-link-grey -link" href="/tags/rxjs/" rel="tag">rxjs</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+<div class="card">
     <div class="card-content">
-        <nav class="breadcrumb" aria-label="breadcrumbs">
-        <ul>
-            <li><a href="/categories">카테고리</a></li>
-            
-            <li class="is-active"><a href="#" aria-current="page">serverless</a></li>
-        </ul>
-        </nav>
-    </div>
-</div>
- 
-<div class="card">
-    
-    <div class="card-image">
-        <a href="/posts/serverless/serverless-deployment-best-practices/" class="image is-7by1">
-            <img class="thumbnail" src="https://s3-us-west-2.amazonaws.com/assets.blog.serverless.com/2019-10-deployment-best-practices/safeguard-hero.png" alt="서버리스 배포 베스트 프랙티스(번역)">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-03-08T15:00:00.000Z">2020-03-09</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/serverless/">serverless</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    18분 읽기 (대략 2635 단어)
-                </span>
-                
-                
-            </div>
+        <h3 class="title is-5 has-text-weight-normal">관련 글</h3>
+        <div class="popular-posts">
+            <ul class="popular-posts"><li class="popular-posts-item"><div class="popular-posts-title"><h3><a href="/posts/books/cloudnative-devops-with-k8s-book-review/" title="Cloud Native Devops with Kubernetes 간단 리뷰" rel="bookmark">Cloud Native Devops with Kubernetes 간단 리뷰</a></h3></div></li><li class="popular-posts-item"><div class="popular-posts-title"><h3><a href="/posts/books/refactoring-book-review/" title="리팩터링 2판 간단 리뷰" rel="bookmark">리팩터링 2판 간단 리뷰</a></h3></div></li><li class="popular-posts-item"><div class="popular-posts-title"><h3><a href="/posts/books/this-is-linux-book-review/" title="이것이 리눅스다 with RedHat CentOS 8 간단 리뷰" rel="bookmark">이것이 리눅스다 with RedHat CentOS 8 간단 리뷰</a></h3></div></li><li class="popular-posts-item"><div class="popular-posts-title"><h3><a href="/posts/rxjs/rxjs-quicklearn-01/" title="RxJS 빠르게 배우기 01 - Overview" rel="bookmark">RxJS 빠르게 배우기 01 - Overview</a></h3></div></li><li class="popular-posts-item"><div class="popular-posts-title"><h3><a href="/posts/rxjs/rxjs-quicklearn-02/" title="RxJS 빠르게 배우기 02 - Observables" rel="bookmark">RxJS 빠르게 배우기 02 - Observables</a></h3></div></li></ul>
         </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/posts/serverless/serverless-deployment-best-practices/">서버리스 배포 베스트 프랙티스(번역)</a>
-            
-        </h1>
-        <div class="content">
-            <p><small>written by Fernando Medina Corey</small></p>
-<blockquote>
-<p>이 튜토리얼의 대부분을 만들기 위해서는 Serverless Framework’s의 대시보드에 로그인 해야 한다: <a href="https://dashboard.serverless.com" rel="external nofollow noopener noreferrer" target="_blank">https://dashboard.serverless.com</a>.</p>
-</blockquote>
-<blockquote>
-<p>역주: 본인은 글을 모두 읽은 다음에 이 주석을 달고 있다. 베스트 프랙티스를 실행할 방법을 알려준 다음 Safeguard라는 Serverless Framework의 대시보드, 기타 등등 대시보드 기능으로 베스트 프랙티스를 실행하는 내용을 알려준다. 문제를 먼저 알려주고 해결하고 싶으면 우리 제품을 써보는 게 어떻냐는 약팔이 느낌도 있긴 하다.</p>
-</blockquote>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/posts/serverless/serverless-deployment-best-practices/#more">자세히 보기</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
+    </div>    
 </div>
 
 
 
-
-
-
-
-
-
-  
-<div class="card">
-    
-    <div class="card-image">
-        <a href="/posts/serverless/serverless-vpc-deploy-demo/" class="image is-7by1">
-            <img class="thumbnail" src="/images/2020-03-05-serverless-vpc-deploy-demo/thumbnail.png" alt="Serverless + S3 + DyanamoDB VPC에 배포하고 외부와 연결하기">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-03-04T15:00:00.000Z">2020-03-05</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/serverless/">serverless</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    13분 읽기 (대략 1876 단어)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/posts/serverless/serverless-vpc-deploy-demo/">Serverless + S3 + DyanamoDB VPC에 배포하고 외부와 연결하기</a>
-            
-        </h1>
-        <div class="content">
-            <p>서버리스에서 VPC 내부로 배포하는 방법에 대해서 알아보려고 한다. 현재 진행 중인 프로젝트는 빠르고 간단하게 홍보용으로 만들고 있는 프로젝트라, 별다른 옵션 없이 퍼블릭하게 오픈된 API를 만들어놓고 개발 중이다. 그런데, 개발 서버를 분리해서 일정 기간동안 유지 보수 하면서 배포도 몇 번 더 해야 할 필요가 있어서 내부 VPC에 배포하는 방법을 확인해보려고 한다. 추가적으로, VPC 내부로 배포하게 되면 S3와 DynamoDB에 접근하기 위해 NAT Gateway 또는 VPC Endpoint를 만들어줘야 한다. 이번 글에서는 NAT Gateway를 설정해주는 걸 해볼 것이다.</p>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/posts/serverless/serverless-vpc-deploy-demo/#more">자세히 보기</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-  
-<div class="card">
-    
-    <div class="card-image">
-        <a href="/posts/serverless/serverless-cronjob-crawler-demo/" class="image is-7by1">
-            <img class="thumbnail" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAolBMVEUAAAD+V1H/WVP/WlRoJiSmPzwGAADRVVL3X1lmLizcU1D/WFCaPjsAAQDPTUsAAAPCS0f/Xlf/XFo/Hx5hLCtpLC1UKSf/W1LVUEz/VlbPTkd0MTDGS0a9S0h7NS8jCwqONzXsXFUnFBJSIyGjQj6YPzxJHhs2GRg/GxqGODdeJSQeCwrsWVanREBBFhVJIBzcXVW9SkUXCwt9OTi4VVWpSkrtSDTvAAADZ0lEQVR4nO3bW1vaMBzH8TSdnGKNrTJlypSJYzo8b+//rS14ASQUmpaLJuz7uVL857G/J+kpIUIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA0cdavcm7VZ6bFsLKNKfnaUqAN03S3UXoq9Fq9Ft0LKSsapabisrVIjuNkN5UOTb+ty82HFY1MxehbS4E2HMuKY+05Da6KynhJIpU6aSVOiaqE8tppMPYIaDo5noTpd6dB79AS5jd2fT89tITWgZpLzlvVeRtbQnlrVWsx8QkYUUKV/7DuhuIur75TxJNQmT8NRKY7y+JMTL0GaSwJzV1tdO+UT5LDOg9V8dOufs69unDRNIqEqZw41ffS44ntM6AMJ+Guw1RPTvVASc8rTRLOc2m+9QWhSIs7u3iWmw995EUeTB/++rLD0Cme7Sp23JX+OwAAgIhkwn5xDlBWXRK/0DuhfaEMg/7RFufWIWZiuq1wi4fWIjmOU1mqeLTrbvKkvLCUkhfBvB9um8WYCL3qQ/PTrddc9+odP/x5mrHorFVpcVInYAwJ0759pfjtPckWS8JeZz2hFle1BmnwCc1Hp9bVviOu/SYRY0loBumVU+a1ahhNQqk2lraHqd96RSQJ1WLVMLMe2ryWtuNJmKTprVM1r3cahp5QjvKZXfSYey5XRJJQJQOn6Eke1nkolbtqOK/ZhWElLDm8/NmueSl8vgZluQhnde2+t6F4ra6p1m0lTpnOJut5JsvE4pOyut1aS+RldTPMms0qhT0FojdnIGrPSGShzGEAAIAy2rpV7/FoEs4tX6+zI2XmV91IW2G8rB1dpvfpiFBiPgxs1vyFFmeDpsZtJXI57/ju/IXnt55dUslw9j1ZEeTUuUS8NgoY1iyGlTB/sSdKZz6bnKJKOLf+pmuuGkaQUC4uD6tRqsVls4BhJlzsrkit/aKZuClqTrGFnXC0uSDz0exKGmjCRS++mYG5PkhPGwYMNWGSO6uG7zVXDQNPaM643rt9r6i5tB16wsTZa2ieScdNT8MwE0prQ+xnV84Tv31ckSRM1PqG2MWL02Mq1SElVIn7rHzUeJAGlfCju/ThvNL96e7jb0uB/O29dhTKG/CSs5aSZXtF1AHN0yw5S04BHiEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPg//AO9zTv9FO6XegAAAABJRU5ErkJggg==" alt="서버리스로 CronJob 만들기 (코로나 크롤러)">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-02-29T15:00:00.000Z">2020-03-01</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/serverless/">serverless</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    17분 읽기 (대략 2489 단어)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/posts/serverless/serverless-cronjob-crawler-demo/">서버리스로 CronJob 만들기 (코로나 크롤러)</a>
-            
-        </h1>
-        <div class="content">
-            <p>현재 진행하고 있는 프로젝트에서는 크로나 현황을 간단하게 보여주는 섹션이 존재하는데, 이 부분을 누군가가 (API 형식으로다가?) 제공해주고 있는 것으로 알고 있었다. 그렇지만 아직 나온 건 없었고, 어쩔 수 없이 간단한 크롤러를 만들고 업데이트 해주기로 했다. 현재 프로젝트가 서버리스로 돌고 있기도 하고, Scheduled 된 작업을 돌리기 위해서는 람다가 적합하지 않을라나 싶어서 같은 서버리스 프로젝트에서 크론잡을 돌리는 함수를 만들어보기로 했다.</p>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/posts/serverless/serverless-cronjob-crawler-demo/#more">자세히 보기</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-  
-<div class="card">
-    
-    <div class="card-image">
-        <a href="/posts/serverless/serverless-architecture-pattern/" class="image is-7by1">
-            <img class="thumbnail" src="https://miro.medium.com/max/730/1*Fjsk_yELuDAavR8sXOW6Sg.png" alt="서버리스 아키텍처 패턴">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-12-08T15:00:00.000Z">2019-12-09</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/serverless/">serverless</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    10분 읽기 (대략 1471 단어)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/posts/serverless/serverless-architecture-pattern/">서버리스 아키텍처 패턴</a>
-            
-        </h1>
-        <div class="content">
-            <p>이 글은 <strong>AWS 기반 서버리스 아키텍처</strong> 책 중에 서버리스 아키텍처 패턴 부분을 간단하게 정리한 글이다.</p>
-<p>앞으로 소개되는 패턴들은 서버리스 아키텍처에 적용 가능 한 것이라고 배타적으로 표현하지 않아도 된다. 이 패턴은 서버리스 이전에 분산 시스템에서 사용되던 패턴이다. 또한 여기서 정리한 패턴 말고도, 인증과 관련된 패턴, 데이터 관리(CQRS, 이벤트 소싱, 구체화된 뷰, 샤딩) 및 오류 처리와 관련된 패턴(재시도 패턴)을 잘 알고 있는 것이 좋다.</p>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/posts/serverless/serverless-architecture-pattern/#more">자세히 보기</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-  
-<div class="card">
-    
-    <div class="card-image">
-        <a href="/posts/serverless/serverless-framework-quicklearn-(2)/" class="image is-7by1">
-            <img class="thumbnail" src="https://files.readme.io/ffb4c59-Serverless.png" alt="Serverless 프레임워크 빠르게 배우기 (2)">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-11-26T15:00:00.000Z">2019-11-27</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/serverless/">serverless</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    18분 읽기 (대략 2757 단어)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/posts/serverless/serverless-framework-quicklearn-(2)/">Serverless 프레임워크 빠르게 배우기 (2)</a>
-            
-        </h1>
-        <div class="content">
-            <p><a href="/posts/serverless/serverless-framework-quicklearn-(1)">지난 포스트</a>에서 serverless의 기본적인 핵심 개념들과 그 중 Services까지 정리를 했다. 이번에는 Functions에 대해서 정리해보자. (Events까지 보려고 했는데 생각보다 함수파트 내용이 복잡하고 많으니까 천천히 다시 볼 필요가 있는 것 같음)</p>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/posts/serverless/serverless-framework-quicklearn-(2)/#more">자세히 보기</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-   
 <div class="card card-transparent">
-    <nav class="pagination is-centered" role="navigation" aria-label="pagination">
-        <div class="pagination-previous is-invisible is-hidden-mobile">
-            <a class="is-flex-grow has-text-black-ter" href="/categories/serverless/page/0/">이전</a>
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/posts/rxjs/rxjs-quicklearn-03/">
+                <span class="level-item">RxJS 빠르게 배우기 03 - Observer &amp; Subscription &amp; Operator</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
         </div>
-        <div class="pagination-next">
-            <a class="is-flex-grow has-text-black-ter" href="/categories/serverless/page/2/">다음</a>
-        </div>
-        <ul class="pagination-list is-hidden-mobile">
-            
-            <li><a class="pagination-link is-current" href="/categories/serverless/">1</a></li>
-            
-            <li><a class="pagination-link has-text-black-ter" href="/categories/serverless/page/2/">2</a></li>
-            
-        </ul>
-    </nav>
-</div> 
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">댓글</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '91ddc41ab35ce7e007bc',
+        clientSecret: '3c8e6dfed82df844abf72dcf101446a3990abe0e',
+        id: '4088887259c0aaff39ea53b6bca5d122',
+        repo: 'https://github.com/changhoi/changhoi.github.io',
+        owner: 'changhoi',
+        admin: ["changhoi"],
+        createIssueManually: false,
+        distractionFreeMode: false
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
+
 </div>
                 
 
@@ -995,6 +781,7 @@
         <div class="column-right-shadow is-hidden-widescreen is-sticky">
         
             
+
         
             <div class="card widget">
     <div class="card-content">
@@ -1112,6 +899,7 @@
 <div class="column is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only has-order-3 column-right is-sticky">
     
         
+
     
         <div class="card widget">
     <div class="card-content">
@@ -1229,7 +1017,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.jpg" alt="CH DEVLOG" height="28">
+                    <img src="/images/logo.jpg" alt="RxJS 프로그래밍 간단 리뷰" height="28">
                 
                 </a>
                 <p class="is-size-7">

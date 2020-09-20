@@ -8,6 +8,14 @@
     </url>
 
     <url>
+        <loc>https://changhoi.github.io/posts/books/rxjs-programming-book-review/</loc>
+        <lastmod>2020-09-20T10:35:18.779Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://changhoi.github.io/posts/books/this-is-linux-book-review/</loc>
         <lastmod>2020-09-20T10:34:18.325Z</lastmod>
         <changefreq>weekly</changefreq>
