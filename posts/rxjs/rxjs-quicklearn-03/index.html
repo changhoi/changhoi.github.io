@@ -11,16 +11,16 @@
 <title>RxJS 빠르게 배우기 03 - Observar &amp; Subscription &amp; Operator - CH DEVLOG</title>
 
 
-    <meta name="description" content="지난 글에서는 Observable과 구독 관련 동작 방식에 대해서 글을 작성했다. 이번 글에서는 Observer와 Operator에 대해서 간단하게 알아보자.">
+    <meta name="description" content="지난 글에서는 Observable과 구독 관련 동작 방식에 대해서 글을 작성했다. 이번 글에서는 Observer, Subscription, Operator에 대해서 간단하게 알아보자.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="RxJS 빠르게 배우기 03 - Observar &amp; Subscription &amp; Operator">
 <meta property="og:url" content="https://changhoi.github.io/posts/rxjs/rxjs-quicklearn-03/">
 <meta property="og:site_name" content="CH DEVLOG">
-<meta property="og:description" content="지난 글에서는 Observable과 구독 관련 동작 방식에 대해서 글을 작성했다. 이번 글에서는 Observer와 Operator에 대해서 간단하게 알아보자.">
+<meta property="og:description" content="지난 글에서는 Observable과 구독 관련 동작 방식에 대해서 글을 작성했다. 이번 글에서는 Observer, Subscription, Operator에 대해서 간단하게 알아보자.">
 <meta property="og:locale" content="ko_KR">
 <meta property="og:image" content="https://changhoi.github.io/images/2020-09-17-rxjs-quicklearn-02/01.png">
 <meta property="article:published_time" content="2020-09-19T15:00:00.000Z">
-<meta property="article:modified_time" content="2020-09-20T10:08:02.393Z">
+<meta property="article:modified_time" content="2020-09-20T10:11:13.373Z">
 <meta property="article:author" content="changhoi">
 <meta property="article:tag" content="rxjs">
 <meta property="article:tag" content="RxJS_빠르게_배우기">
@@ -170,7 +170,7 @@
             
         </h1>
         <div class="content">
-            <p><a href="/posts/rxjs/rxjs-quicklearn-03/">지난 글</a>에서는 <code>Observable</code>과 구독 관련 동작 방식에 대해서 글을 작성했다. 이번 글에서는 <code>Observer</code>와 <code>Operator</code>에 대해서 간단하게 알아보자.</p>
+            <p><a href="/posts/rxjs/rxjs-quicklearn-03/">지난 글</a>에서는 <code>Observable</code>과 구독 관련 동작 방식에 대해서 글을 작성했다. 이번 글에서는 <code>Observer</code>, <code>Subscription</code>, <code>Operator</code>에 대해서 간단하게 알아보자.</p>
 <a id="more"></a>
 
 <h2 id="Observer"><a href="#Observer" class="headerlink" title="Observer"></a>Observer</h2><p>옵저버는 Observable에 의해 전달된 값을 소비하는 주체이다. 일종의 콜백 묶음으로 볼 수 있는데, <code>Observable</code>이 전달해주는 <code>next</code>, <code>error</code>, <code>complete</code>을 어떻게 처리하는지에 대한 내용이 있는 콜백들이다.</p>
