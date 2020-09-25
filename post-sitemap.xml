@@ -8,6 +8,14 @@
     </url>
 
     <url>
+        <loc>https://changhoi.github.io/posts/rxjs/rxjs-operator-01/</loc>
+        <lastmod>2020-09-25T22:05:22.556Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://changhoi.github.io/posts/books/rxjs-programming-book-review/</loc>
         <lastmod>2020-09-20T10:35:18.779Z</lastmod>
         <changefreq>weekly</changefreq>
