@@ -1,27 +1,31 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <link rel="canonical" href="https://changhoi.github.io/tags/refactoring/">
+    <link rel="canonical" href="https://changhoi.github.io/posts/books/modern-java-in-action-review/">
     <meta charset="utf-8">
 
 <meta name="generator" content="Hexo 4.2.0">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-<title>태그: refactoring - CH DEVLOG</title>
+<title>모던 자바 인 액션 간단 리뷰 - CH DEVLOG</title>
 
 
-    <meta name="description" content="개발 과정 기록">
-<meta property="og:type" content="website">
-<meta property="og:title" content="CH DEVLOG">
-<meta property="og:url" content="https://changhoi.github.io/tags/refactoring/">
+    <meta name="description" content="한빛 미디어의 나는 리뷰어다에서 10월 미션으로 나온 책 중에 하나인 모던 자바 인 액션을 받게 됐고, 이번 달에 읽어보게 됐다. 이 글은 이 책에 대한 간단한 리뷰이다.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="모던 자바 인 액션 간단 리뷰">
+<meta property="og:url" content="https://changhoi.github.io/posts/books/modern-java-in-action-review/">
 <meta property="og:site_name" content="CH DEVLOG">
-<meta property="og:description" content="개발 과정 기록">
+<meta property="og:description" content="한빛 미디어의 나는 리뷰어다에서 10월 미션으로 나온 책 중에 하나인 모던 자바 인 액션을 받게 됐고, 이번 달에 읽어보게 됐다. 이 글은 이 책에 대한 간단한 리뷰이다.">
 <meta property="og:locale" content="ko_KR">
-<meta property="og:image" content="https://changhoi.github.io/images/og_image.png">
+<meta property="og:image" content="https://changhoi.github.io/images/2020-10-23-book-review/book.jpeg">
+<meta property="article:published_time" content="2020-10-22T15:00:00.000Z">
+<meta property="article:modified_time" content="2020-10-23T00:40:44.981Z">
 <meta property="article:author" content="changhoi">
+<meta property="article:tag" content="review">
+<meta property="article:tag" content="refactoring">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://changhoi.github.io/images/og_image.png">
+<meta name="twitter:image" content="https://changhoi.github.io/images/2020-10-23-book-review/book.jpeg">
 
 
 
@@ -84,7 +88,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.jpg" alt="CH DEVLOG" height="28">
+                <img src="/images/logo.jpg" alt="모던 자바 인 액션 간단 리뷰" height="28">
             
             </a>
         </div>
@@ -113,6 +117,10 @@
                     
                 
                 
+                <a class="navbar-item is-hidden-tablet catalogue" title="카탈로그" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
                 
                 <a class="navbar-item search" title="검색" href="javascript:;">
                     <i class="fas fa-search"></i>
@@ -126,23 +134,13 @@
     <section class="section">
         <div class="container">
             <div class="columns">
-                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
-    <div class="card-content">
-        <nav class="breadcrumb" aria-label="breadcrumbs">
-        <ul>
-            <li><a href="/tags">태그</a></li>
-            <li class="is-active"><a href="#" aria-current="page">refactoring</a></li>
-        </ul>
-        </nav>
-    </div>
-</div>
- 
+                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main">
 <div class="card">
     
     <div class="card-image">
-        <a href="/posts/books/modern-java-in-action-review/" class="image is-7by1">
+        <span class="image is-7by1">
             <img class="thumbnail" src="/images/2020-10-23-book-review/book.jpeg" alt="모던 자바 인 액션 간단 리뷰">
-        </a>
+        </span>
     </div>
     
     <div class="card-content article ">
@@ -168,21 +166,26 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                <a class="has-link-black-ter" href="/posts/books/modern-java-in-action-review/">모던 자바 인 액션 간단 리뷰</a>
+                모던 자바 인 액션 간단 리뷰
             
         </h1>
         <div class="content">
             <p>한빛 미디어의 <strong>나는 리뷰어다</strong>에서 10월 미션으로 나온 책 중에 하나인 <strong>모던 자바 인 액션</strong>을 받게 됐고, 이번 달에 읽어보게 됐다. 이 글은 이 책에 대한 간단한 리뷰이다.</p>
+<a id="more"></a>
+
+<p>이 책은 정말 모던한 방식으로 자바를 사용하려면 어떻게 해야하는지를 담고 있는 책이다. 그야말로 책 제목이 내용을 잘 담고 있지만, 본인은 처음 책을 받을 때 최근 문법을 포함한 자바에 대한 기본적인 내용에 대해 공부하게 될 줄 알았다. 본인은 자바를 공부한 경험이 학부 수업에 간단하게 배운 거 말고는 없어서, <code>이것이 자바다</code> 책 처럼 처음부터 천천히 배우는 느낌을 원했는데, 일단 그런 종류의 책은 아니다. 기본적으로 기존 자바 개발자에게 함수형, Reactive 방식으로 자바를 사용하는 방법에 대해서 다루고 있다. 조금 더 구체적으로 말 하면, 1 장에서 모던하게 바뀌고 있는 자바에 대해 설명해준다. 그 뒤로부터는 자바의 <code>람다</code>에 대한 자세한 활용과 <code>스트림</code> 이라는 것, 함수형 프로그래밍에 자주 사용되는 맵, 리듀스, 필터, 리듀스 등 패턴에 대해 알아보고 <code>RxJava</code>를 사용하는 내용으로 이어진다. 그 밖에 큰 줄기로 모던한 JAVA의 API들을 소개하는 장도 여럿 있었다. 본인은 우선 공부보다 자바의 현대적 구조, 코딩 스타일에 대해 슥 훑는 정도로 생각하고 간단하게 봤고, 따로 자바를 공부한 다음 읽어보면 더 좋은 시너지를 낼 수 있는 책이었을 것 같다고 생각했다. 아예 자바를 처음 보는 사람은 이 책을 먼저 읽지 않는 게 좋을 것 같다. 자바 개발자라면, 읽어보면 충분히 좋은 내용을 공부할 수 있게 될 것 같다.</p>
+
         </div>
         
-        
-        <div class="level is-mobile">
+        <div class="level is-size-7 is-uppercase">
             <div class="level-start">
                 <div class="level-item">
-                <a class="button is-size-7 is-light" href="/posts/books/modern-java-in-action-review/#more">자세히 보기</a>
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/refactoring/" rel="tag">refactoring</a>, <a class="has-link-grey -link" href="/tags/review/" rel="tag">review</a>
                 </div>
             </div>
         </div>
+        
         
         
     </div>
@@ -193,130 +196,57 @@
 
 
 
-
-
-
-  
 <div class="card">
-    
-    <div class="card-image">
-        <a href="/posts/etc/refactoring-practice/" class="image is-7by1">
-            <img class="thumbnail" src="https://c0.wallpaperflare.com/preview/600/243/618/javascript-vscode-editor-code.jpg" alt="리팩토링 실습하기">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-06-18T15:00:00.000Z">2020-06-19</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/etc/">etc</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    19분 읽기 (대략 2779 단어)
-                </span>
-                
-                
-            </div>
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">관련 글</h3>
+        <div class="popular-posts">
+            <ul class="popular-posts"><li class="popular-posts-item"><div class="popular-posts-title"><h3><a href="/posts/books/refactoring-book-review/" title="리팩터링 2판 간단 리뷰" rel="bookmark">리팩터링 2판 간단 리뷰</a></h3></div></li><li class="popular-posts-item"><div class="popular-posts-title"><h3><a href="/posts/books/cloudnative-devops-with-k8s-book-review/" title="Cloud Native Devops with Kubernetes 간단 리뷰" rel="bookmark">Cloud Native Devops with Kubernetes 간단 리뷰</a></h3></div></li><li class="popular-posts-item"><div class="popular-posts-title"><h3><a href="/posts/books/rxjs-programming-book-review/" title="RxJS 프로그래밍 간단 리뷰" rel="bookmark">RxJS 프로그래밍 간단 리뷰</a></h3></div></li><li class="popular-posts-item"><div class="popular-posts-title"><h3><a href="/posts/books/this-is-linux-book-review/" title="이것이 리눅스다 with RedHat CentOS 8 간단 리뷰" rel="bookmark">이것이 리눅스다 with RedHat CentOS 8 간단 리뷰</a></h3></div></li><li class="popular-posts-item"><div class="popular-posts-title"><h3><a href="/posts/etc/refactoring-practice/" title="리팩토링 실습하기" rel="bookmark">리팩토링 실습하기</a></h3></div></li></ul>
         </div>
+    </div>    
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
         
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/posts/etc/refactoring-practice/">리팩토링 실습하기</a>
-            
-        </h1>
-        <div class="content">
-            <p>약 한 달 조금 넘는 기간 동안 팀에서 듀데이트가 걸린 프로젝트를 완성하느라 블로그와 기타 공부를 완전히 손 놓고 정말 바쁘게 지냈다. 덕분에 머리도 2달 만에 자른 것 같고, 운동도 단 한 번도 안 했다. 책은 꾸역꾸역 받아서 읽긴 했는데 이전에 여유 있던 때처럼 읽지는 못 했다. 아무튼 현재는 그런 시간이 끝났고, 돌아가는 프로젝트의 코드베이스를 뭇지게 정리해두고 싶어져서 당분간은 기능 개발과 기존 기능들에 대한 리팩토링을 동시에 반반 정도 가져가려고 한다. 물론 새로운 기능들 역시 리팩토링을 진행 하면서! 이 글은 리팩토링 책을 읽은 후 우리 프로젝트의 코드베이스를 대상으로 실습을 진행하기 위해 어떤 리팩토링을 하게 되는지 정리한 글이다.</p>
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/posts/rxjs/rxjs-operator-01/">
+                <span class="level-item">RxJS Operator 01 - Creation, Filtering</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
         </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/posts/etc/refactoring-practice/#more">자세히 보기</a>
-                </div>
-            </div>
-        </div>
-        
         
     </div>
 </div>
 
 
 
-
-
-
-
-
-
-  
 <div class="card">
-    
-    <div class="card-image">
-        <a href="/posts/books/refactoring-book-review/" class="image is-7by1">
-            <img class="thumbnail" src="/images/2020-04-26-book-review/book.jpeg" alt="리팩터링 2판 간단 리뷰">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">댓글</h3>
         
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-04-25T15:00:00.000Z">2020-04-26</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/books/">books</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    3분 읽기 (대략 480 단어)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/posts/books/refactoring-book-review/">리팩터링 2판 간단 리뷰</a>
-            
-        </h1>
-        <div class="content">
-            <p>한빛 미디어의 <strong>나는 리뷰어다</strong>에서 4월달 미션으로 나온 책 중에 하나인 <strong>리팩토링 2판</strong>을 받게 됐고, 이번 달에 읽어보게 됐다. 이 글은 이 책에 대한 간단한 리뷰이다.</p>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/posts/books/refactoring-book-review/#more">자세히 보기</a>
-                </div>
-            </div>
-        </div>
-        
-        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '91ddc41ab35ce7e007bc',
+        clientSecret: '3c8e6dfed82df844abf72dcf101446a3990abe0e',
+        id: '1a42f858381ec381d40b65d086882d68',
+        repo: 'https://github.com/changhoi/changhoi.github.io',
+        owner: 'changhoi',
+        admin: ["changhoi"],
+        createIssueManually: false,
+        distractionFreeMode: false
+    })
+    gitalk.render('comment-container')
+</script>
+
     </div>
 </div>
 
-
-
-
-
-
-
-
-
-  
 </div>
                 
 
@@ -850,6 +780,7 @@
         <div class="column-right-shadow is-hidden-widescreen is-sticky">
         
             
+
         
             <div class="card widget">
     <div class="card-content">
@@ -967,6 +898,7 @@
 <div class="column is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only has-order-3 column-right is-sticky">
     
         
+
     
         <div class="card widget">
     <div class="card-content">
@@ -1084,7 +1016,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.jpg" alt="CH DEVLOG" height="28">
+                    <img src="/images/logo.jpg" alt="모던 자바 인 액션 간단 리뷰" height="28">
                 
                 </a>
                 <p class="is-size-7">
