@@ -8,19 +8,19 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-<title>DynamoDB Single Table Design - CH DEVLOG</title>
+<title>DynamoDB 설계 방법: Single Table Design - CH DEVLOG</title>
 
 
-    <meta name="description" content="NoSQL 종류 중 하나인 DyanamoDB는 일반적인 SQL 테이블과 다르게, query 대상이 Partition Key (이하 PK)와 Sort Key (이하 SK), 추가적으로는 Global Secondary Index (이하 GSI)와 Local Secondary Index(이하 LSI)로 구분되는 Secondary Index로 한정된다. 다른 속성">
+    <meta name="description" content="NoSQL 종류 중 하나인 DyanamoDB는 일반적인 SQL 테이블과 다르게, query를 할 때 조건을 설정할 수 있는 대상이 Partition Key (이하 PK)와 Sort Key (이하 SK) 그리고 추가적으로는 Global Secondary Index (이하 GSI)와 Local Secondary Index(이하 LSI)로 구분되는 Seconda">
 <meta property="og:type" content="article">
-<meta property="og:title" content="DynamoDB Single Table Design">
+<meta property="og:title" content="DynamoDB 설계 방법: Single Table Design">
 <meta property="og:url" content="https://changhoi.github.io/posts/backend/dynamodb-single-table-design/">
 <meta property="og:site_name" content="CH DEVLOG">
-<meta property="og:description" content="NoSQL 종류 중 하나인 DyanamoDB는 일반적인 SQL 테이블과 다르게, query 대상이 Partition Key (이하 PK)와 Sort Key (이하 SK), 추가적으로는 Global Secondary Index (이하 GSI)와 Local Secondary Index(이하 LSI)로 구분되는 Secondary Index로 한정된다. 다른 속성">
+<meta property="og:description" content="NoSQL 종류 중 하나인 DyanamoDB는 일반적인 SQL 테이블과 다르게, query를 할 때 조건을 설정할 수 있는 대상이 Partition Key (이하 PK)와 Sort Key (이하 SK) 그리고 추가적으로는 Global Secondary Index (이하 GSI)와 Local Secondary Index(이하 LSI)로 구분되는 Seconda">
 <meta property="og:locale" content="ko_KR">
 <meta property="og:image" content="https://miro.medium.com/max/1136/0*InwpDccVOY73Kri3.png">
 <meta property="article:published_time" content="2020-10-23T15:00:00.000Z">
-<meta property="article:modified_time" content="2020-10-24T09:06:58.965Z">
+<meta property="article:modified_time" content="2020-10-24T13:53:36.031Z">
 <meta property="article:author" content="changhoi">
 <meta property="article:tag" content="serverless">
 <meta property="article:tag" content="dynamodb">
@@ -90,7 +90,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.jpg" alt="DynamoDB Single Table Design" height="28">
+                <img src="/images/logo.jpg" alt="DynamoDB 설계 방법: Single Table Design" height="28">
             
             </a>
         </div>
@@ -141,7 +141,7 @@
     
     <div class="card-image">
         <span class="image is-7by1">
-            <img class="thumbnail" src="https://miro.medium.com/max/1136/0*InwpDccVOY73Kri3.png" alt="DynamoDB Single Table Design">
+            <img class="thumbnail" src="https://miro.medium.com/max/1136/0*InwpDccVOY73Kri3.png" alt="DynamoDB 설계 방법: Single Table Design">
         </span>
     </div>
     
@@ -159,7 +159,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    20분 읽기 (대략 3022 단어)
+                    20분 읽기 (대략 3052 단어)
                 </span>
                 
                 
@@ -168,11 +168,11 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                DynamoDB Single Table Design
+                DynamoDB 설계 방법: Single Table Design
             
         </h1>
         <div class="content">
-            <p>NoSQL 종류 중 하나인 <code>DyanamoDB</code>는 일반적인 SQL 테이블과 다르게, <code>query</code> 대상이 <code>Partition Key</code> (이하 <code>PK</code>)와 <code>Sort Key</code> (이하 <code>SK</code>), 추가적으로는 <code>Global Secondary Index</code> (이하 <code>GSI</code>)와 <code>Local Secondary Index</code>(이하 <code>LSI</code>)로 구분되는 Secondary Index로 한정된다. 다른 속성 필드에 대해서는 쿼리 조건을 설정할 수 없다. 만약 다른 속성에 대해 결과를 보려면 <code>scan</code>을 사용해야 한다. <code>scan</code>은 테이블의 모든 데이터를 조회하기 때문에 성능면에서 좋지 않은 모습을 보여준다. 이러한 테이블 구조가 있어서, DynamoDB는 일반적으로 SQL 테이블을 만들듯 만들면 안 된다. 이 글은 AWS에서 공식적으로 추천하고 있는 <code>Single Table</code> 구조로 설계하는 방법에 대해서 다루고 있다.</p>
+            <p>NoSQL 종류 중 하나인 <code>DyanamoDB</code>는 일반적인 SQL 테이블과 다르게, <code>query</code>를 할 때 조건을 설정할 수 있는 대상이 <code>Partition Key</code> (이하 <code>PK</code>)와 <code>Sort Key</code> (이하 <code>SK</code>) 그리고 추가적으로는 <code>Global Secondary Index</code> (이하 <code>GSI</code>)와 <code>Local Secondary Index</code>(이하 <code>LSI</code>)로 구분되는 Secondary Index로 한정된다. 다른 속성 필드에 대해서는 쿼리 조건을 설정할 수 없다. 만약 다른 속성에 대해 결과를 보려면 <code>scan</code>을 사용해야 한다. <code>scan</code>은 테이블의 모든 데이터를 조회하기 때문에 성능면에서 좋지 않은 모습을 보여준다. 이러한 특성이 있어서, DynamoDB 테이블은 일반적으로 SQL 테이블을 만들듯 만들면 안 된다. 이 글은 AWS에서 공식적으로 추천하고 있는 <code>Single Table</code> 구조로 설계하는 방법에 대해서 다루고 있다.</p>
 <a id="more"></a>
 
 <h2 id="DynamoDB와-RDBS-설계의-차이점"><a href="#DynamoDB와-RDBS-설계의-차이점" class="headerlink" title="DynamoDB와 RDBS 설계의 차이점"></a>DynamoDB와 RDBS 설계의 차이점</h2><p>전통적으로 SQL 데이터베이스에서 테이블을 설계할 때, 스키마를 디자인하고, 데이터를 정규화 한 다음 사용하면서 필요한 쿼리를 작성하게 된다. AWS에서는 이 순서를 뒤집어 생각해야 한다고 설명한다.</p>
@@ -182,8 +182,8 @@
 <blockquote>
 <p>글 전체에서 Primary Key는 줄이지 않고 사용했다. Partition Key는 <code>PK</code>로 줄여 사용했다. 마찬가지로 Secondary Index는 줄이지 않고 사용하고, Sort Key는 <code>SK</code>로 줄여 표현했다.</p>
 </blockquote>
-<h3 id="Primary-Key"><a href="#Primary-Key" class="headerlink" title="Primary Key"></a>Primary Key</h3><p>Primary Key는 항목을 나타내는 고유 식별자가 되어야 하며, 두 아이템이 동일한 키를 가질 수는 없다. DynamoDB에서 Primary Key는 단일한 <code>PK</code>, 또는 <code>PK</code>와 <code>SK</code>로 구성된다. </p>
-<p>Primary Key라는 조건때문에 단일 <code>PK</code>의 경우는 아이템마다 다른 <code>PK</code>를 보장해야 하지만, <code>SK</code>와 함께 쓰인다면, 중복된 <code>PK</code>가 존재해도 된다. <code>PK</code>와 <code>SK</code>가 함께 사용된 Primary Key를 <code>Composite primary key</code>라고 하고, 이 경우에는 <code>PK</code>와 <code>SK</code>에 의해 항목이 구분될 수 있어야 한다.</p>
+<h3 id="Primary-Key"><a href="#Primary-Key" class="headerlink" title="Primary Key"></a>Primary Key</h3><p>Primary Key는 항목을 나타내는 고유 식별자가 되어야 하며, 두 아이템이 동일한 키를 가질 수는 없다. DynamoDB에서 Primary Key는 단일한 <code>PK</code>, 또는 <code>PK</code>와 <code>SK</code>로 구성될 수 있다. </p>
+<p>Primary Key라는 조건때문에 단일 <code>PK</code>로 이루어진 경우는 아이템마다 다른 <code>PK</code>를 보장해야 하지만, <code>SK</code>와 함께 Primary Key를 구성한다면, 중복된 <code>PK</code>가 존재해도 된다. <code>PK</code>와 <code>SK</code>가 함께 사용된 Primary Key를 <code>Composite primary key</code>라고 하고, 이 경우에는 <code>PK</code>와 <code>SK</code>에 의해 항목이 구분될 수 있어야 한다.</p>
 <p>DynamoDB는 <code>PK</code>의 해시 값을 계산해, 항목을 저장할 파티션을 결정한다. 동일한 <code>PK</code>를 가질 수 있고, 같은 값에 대해서는 같은 파티션에 <code>SK</code>의 오름차순으로 저장하게 된다.</p>
 <h3 id="Secondary-Index"><a href="#Secondary-Index" class="headerlink" title="Secondary Index"></a>Secondary Index</h3><p>보조 인덱스라고 문서에 해석되어있지만, 글에서는 Secondary Index로 사용했다. 기본적으로 쿼리를 위해 <code>PK</code>와 <code>SK</code>를 사용하게 되지만, Secondary Index를 추가해 사용할 수 있게 된다. DynamoDB는 다음 두 가지 형태의 Secondary Index를 지원하고 있다.</p>
 <table>
@@ -212,7 +212,7 @@
 <li>데이터 접근 패턴을 정의한다.</li>
 <li><strong>Primary Key</strong>와 <strong>Secondary Indexes</strong>을 디자인 한다.</li>
 </ol>
-<p>위 순서에서, <strong>3 번</strong>의 경우, <code>PK</code>와 <code>SK</code>를 합쳐서 Primary Key를 구성하게 되는데, 이때 여러 테이블이 <code>pre-join</code> 되어있다고 봐야 하기 때문에,  <code>PK</code>와 <code>SK</code>를 디테일한 필드로 두지 말고 아주 일반적인 이름을 사용할 것을 권장한다. 그렇게 설계한 뒤 <code>PK</code>와 <code>SK</code>를 통해 어떤 Entity에 접근 하고 있는 건지 구분 할 수 있게 해야 한다. 자세한 예시를 확인해보자</p>
+<p>위 순서에서, <strong>3 번</strong>의 경우, <code>PK</code>와 <code>SK</code>를 합쳐서 Primary Key를 구성하게 되는데, 이때 여러 테이블이 <code>pre-join</code> 되어있다고 봐야 하기 때문에,  <code>PK</code>와 <code>SK</code>를 디테일한 이름을 가진 필드로 두지 말고 아주 일반적인 이름을 사용할 것을 권장한다. 그렇게 설계한 뒤 <code>PK</code>와 <code>SK</code>를 통해 어떤 Entity에 접근 하고 있는 건지 구분 할 수 있게 해야 한다. 자세한 예시를 확인해보자</p>
 <h3 id="예시"><a href="#예시" class="headerlink" title="예시"></a>예시</h3><p>2019 AWS re:invent에서 들어준 예시를 확인해보자. E-commerce 서비스를 위해 <code>User</code>와 <code>Order</code>테이블을 설계하는 예시이다.</p>
 <blockquote>
 <p>실제로는 아래 예시에서 조금 더 나아가 Filtering Pattern에 대해서도 다룬다. 정말 정리 해두고 싶은 내용이지만, 글 분량이 너무 길어지고 적당하게 잘 정리할 수 있을지 모르겠어서 생략했다.</p>
@@ -950,14 +950,14 @@
             
             <a href="/posts/backend/dynamodb-single-table-design/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="https://miro.medium.com/max/1136/0*InwpDccVOY73Kri3.png" alt="DynamoDB Single Table Design">
+                    <img class="thumbnail" src="https://miro.medium.com/max/1136/0*InwpDccVOY73Kri3.png" alt="DynamoDB 설계 방법: Single Table Design">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-10-23T15:00:00.000Z">2020-10-24</time></div>
-                    <a href="/posts/backend/dynamodb-single-table-design/" class="title has-link-black-ter is-size-6 has-text-weight-normal">DynamoDB Single Table Design</a>
+                    <a href="/posts/backend/dynamodb-single-table-design/" class="title has-link-black-ter is-size-6 has-text-weight-normal">DynamoDB 설계 방법: Single Table Design</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/backend/">backend</a>
                     </p>
@@ -1115,14 +1115,14 @@
             
             <a href="/posts/backend/dynamodb-single-table-design/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="https://miro.medium.com/max/1136/0*InwpDccVOY73Kri3.png" alt="DynamoDB Single Table Design">
+                    <img class="thumbnail" src="https://miro.medium.com/max/1136/0*InwpDccVOY73Kri3.png" alt="DynamoDB 설계 방법: Single Table Design">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-10-23T15:00:00.000Z">2020-10-24</time></div>
-                    <a href="/posts/backend/dynamodb-single-table-design/" class="title has-link-black-ter is-size-6 has-text-weight-normal">DynamoDB Single Table Design</a>
+                    <a href="/posts/backend/dynamodb-single-table-design/" class="title has-link-black-ter is-size-6 has-text-weight-normal">DynamoDB 설계 방법: Single Table Design</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/backend/">backend</a>
                     </p>
@@ -1221,7 +1221,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.jpg" alt="DynamoDB Single Table Design" height="28">
+                    <img src="/images/logo.jpg" alt="DynamoDB 설계 방법: Single Table Design" height="28">
                 
                 </a>
                 <p class="is-size-7">
