@@ -8,6 +8,14 @@
     </url>
 
     <url>
+        <loc>https://changhoi.github.io/posts/essay/what-post-is-good-post/</loc>
+        <lastmod>2020-11-11T16:45:28.062Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://changhoi.github.io/posts/backend/dynamodb-single-table-design/</loc>
         <lastmod>2020-10-24T13:53:36.031Z</lastmod>
         <changefreq>weekly</changefreq>
